@@ -1,0 +1,55 @@
+$logo_size: 200px;
+
+
+%btn-green {
+    background: #61E89F;
+    border-radius: 28px;
+
+    &:hover {
+        background: #47af77;
+    }
+}
+
+.navbar {
+    background: rgba(217, 217, 217, 0.5);
+    height: 135px;
+
+    &__nav-link {
+        font-size: 20px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        text-transform: uppercase;
+        color: #000000;
+
+        &:hover {
+            color: #00c421;
+        }
+    }
+
+    &__auth-btn {
+        @extend %btn-green;
+        margin-right: 10rem;
+    }
+}
+
+
+.logo-bg {
+    position: absolute;
+    width: $logo_size;
+    height: $logo_size;
+    left: 0px;
+    top: 0px;
+
+    background: #44B35C;
+    border-radius: 0px 0px 0px ($logo_size * 100) /153;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+
+footer {
+    background: #000;
+    height: 12rem;
+}
