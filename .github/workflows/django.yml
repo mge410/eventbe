@@ -1,0 +1,55 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Django and Linter tests
+
+on: [push, pull_request]
+
+jobs:
+  linter_name:
+    name: runner / black and flake8
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: rickstaa/action-black@v1
+        with:
+          black_args: ". --check --skip-string-normalization"
+
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          flake8-version: "5.0.4"
+          exclude: ".git,__pycache__,.env,venv/,*/migrations/"
+          ignore: "W503,E203"
+          max-line-length: "79"
+          per-file-ignores: "manage.py:Q000"
+          import-order-style: "google"
+          plugins: "flake8==5.0.4 pep8-naming==0.13.3 flake8-broken-line==0.6.0 flake8-return==1.2.0 flake8-isort==6.0.0 flake8-quotes==3.3.2"
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ 3.11.1 ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/requirements.txt
+          pip install -r requirements/requirements_test.txt
+      - name: Run Django tests
+        run: |
+          cd lyceum
+          python manage.py test
