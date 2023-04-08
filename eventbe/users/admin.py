@@ -7,11 +7,11 @@ import users.models
 class UserAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
         users.models.User.username.field.name,
-        users.models.User.is_active.field.name,
         users.models.User.email.field.name,
+        users.models.User.is_staff.field.name,
+        users.models.User.is_superuser.field.name,
     )
     list_editable = (
-        users.models.User.is_active.field.name,
         users.models.User.is_staff.field.name,
         users.models.User.is_superuser.field.name,
     )

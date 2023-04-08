@@ -27,7 +27,7 @@ class Tag(django.db.models.Model):
 class Event(django.db.models.Model):
     class Status(django.db.models.TextChoices):
         public = 'pub', 'public'
-        authorizedonly = 'authonly', 'authorized_only'
+        authorizedonly = 'authonly', 'authorized only'
         private = 'priv', 'private'
 
     title = django.db.models.CharField(
