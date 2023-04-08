@@ -3,7 +3,6 @@ import django.contrib.auth.models
 import django.core.mail
 import django.db.models
 from django.utils.translation import ugettext_lazy as _
-
 import users.managers
 
 
