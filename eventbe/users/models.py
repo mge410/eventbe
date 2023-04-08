@@ -3,6 +3,7 @@ import django.contrib.auth.models
 import django.core.mail
 import django.db.models
 from django.utils.translation import ugettext_lazy as _
+
 import users.managers
 
 
@@ -26,12 +27,12 @@ class User(
     coins = django.db.models.PositiveIntegerField(
         _('coins'),
         default=0,
-        help_text=_('Coins')
+        help_text=_('Coins'),
     )
     event_search_distance = django.db.models.PositiveIntegerField(
         _('event search distance'),
         default=100,
-        help_text=_('Distance to search events in')
+        help_text=_('Distance to search events in'),
     )
 
     objects = users.managers.UserManager()
