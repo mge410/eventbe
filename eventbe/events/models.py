@@ -86,7 +86,7 @@ class Event(django.db.models.Model):
         help_text='Event must have at least 1 tag',
     )
 
-    author = django.db.models.ForeignKey(
+    organizer = django.db.models.ForeignKey(
         users.models.User,
         on_delete=django.db.models.CASCADE,
         verbose_name=_('event author'),

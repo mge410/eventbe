@@ -29,6 +29,16 @@ class User(
         default=0,
         help_text=_('Coins'),
     )
+    events_visited = django.db.models.PositiveIntegerField(
+        _('events visited'),
+        default=0,
+        help_text=_('events visited'),
+    )
+    events_organized = django.db.models.PositiveIntegerField(
+        _('events organized'),
+        default=0,
+        help_text=_('events organized'),
+    )
     event_search_distance = django.db.models.PositiveIntegerField(
         _('event search distance'),
         default=100,
