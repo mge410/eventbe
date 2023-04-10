@@ -58,7 +58,7 @@ class UserAvatar(core.models.ImageModel):
         return f'uploads/users/{self.user.id}'
 
     image = django.db.models.ImageField(
-        _('thumbnail'),
+        _('avatar'),
         upload_to=saving_path,
         help_text='Will be rendered at 300x300 px',
     )
@@ -68,5 +68,5 @@ class UserAvatar(core.models.ImageModel):
         on_delete=django.db.models.PROTECT,
         null=True,
         blank=True,
-        help_text=_('event thumbnail'),
+        help_text=_('user profile pic'),
     )
