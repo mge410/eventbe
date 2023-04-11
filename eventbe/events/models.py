@@ -1,5 +1,9 @@
+import typing as tp
+
 import django.db.models
+import django.utils.html
 from django.utils.translation import ugettext_lazy as _
+import sorl.thumbnail
 
 import core.models
 import users.models
@@ -24,6 +28,9 @@ class Tag(django.db.models.Model):
         _('is active'),
         default=True,
     )
+
+    def __str__(self) -> str:
+        return self.title[:20]
 
 
 class Event(django.db.models.Model):
@@ -95,16 +102,41 @@ class Event(django.db.models.Model):
         verbose_name = 'event'
         verbose_name_plural = 'events'
 
+    def __str__(self) -> str:
+        return self.title[:30]
+
 
 class EventThumbnail(core.models.ImageModel):
-    def saving_path(self, name) -> str:
-        return f'uploads/eventthumbnails/{self.event.id}/'
+    def saving_path(self, name):
+        return f'uploads/useravatar/{self.user.id}/{name}'
 
     image = django.db.models.ImageField(
-        _('thumbnail'),
+        'image',
         upload_to=saving_path,
-        help_text='Will be rendered at 300x300 px',
+        help_text='Will be rendered at 300px',
     )
+
+    class Meta:
+        verbose_name = 'event image'
+        verbose_name_plural = 'event images'
+        default_related_name = 'event_image'
+
+    def get_image_300x300(self) -> tp.Any:
+        return sorl.thumbnail.get_thumbnail(
+            self.image,
+            '300x300',
+            crop='center',
+            quality=51,
+        )
+
+    def image_tmb(self) -> tp.AnyStr:
+        if self.image:
+            return django.utils.html.mark_safe(
+                f'<img src="{self.get_image_300x300().url}">',
+            )
+        return 'No picture'
+
+    image_tmb.short_description = 'image'
 
     event = django.db.models.ForeignKey(
         Event,

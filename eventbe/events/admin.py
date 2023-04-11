@@ -24,6 +24,10 @@ class CommentAdmin(django.contrib.admin.StackedInline):
         model.author.field.name,
         model.message.field.name,
     )
+    readonly_fields = (
+        model.author.field.name,
+        model.message.field.name,
+    )
 
 
 @django.contrib.admin.register(events.models.Event)
@@ -56,9 +60,25 @@ class EventAdmin(django.contrib.admin.ModelAdmin):
         events.models.Event.tags.field.name,
     )
 
+    readonly_fields = (
+        events.models.Event.organizer.field.name,
+        events.models.Event.description.field.name,
+    )
+
     filter_horizontal = [
         events.models.Event.tags.field.name,
     ]
 
 
-django.contrib.admin.site.register(events.models.Tag)
+@django.contrib.admin.register(events.models.Tag)
+class TagAdmin(django.contrib.admin.ModelAdmin):
+    list_display = (
+        events.models.Tag.title.field.name,
+        events.models.Tag.is_active.field.name,
+        events.models.Tag.slug.field.name,
+    )
+    list_editable = (
+        events.models.Tag.is_active.field.name,
+        events.models.Tag.slug.field.name,
+    )
+    list_display_links = (events.models.Tag.title.field.name,)

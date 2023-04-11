@@ -8,7 +8,7 @@ import sorl.thumbnail
 class ImageModel(django.db.models.Model):
     image = django.db.models.ImageField(
         'image',
-        upload_to='events/',
+        upload_to='pictures/',
         help_text='Will be rendered at 300px',
     )
 

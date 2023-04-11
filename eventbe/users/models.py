@@ -1,10 +1,13 @@
+import typing as tp
+
 import django.contrib.auth.base_user
 import django.contrib.auth.models
 import django.core.mail
 import django.db.models
+import django.utils.html
 from django.utils.translation import ugettext_lazy as _
+import sorl.thumbnail
 
-import core.models
 import users.managers
 
 
@@ -53,15 +56,37 @@ class User(
         verbose_name_plural = _('users')
 
 
-class UserAvatar(core.models.ImageModel):
-    def saving_path(self, name) -> str:
-        return f'uploads/users/{self.user.id}'
+class UserAvatar(django.db.models.Model):
+    def saving_path(self, name):
+        return f'uploads/useravatar/{self.user.id}/{name}'
 
     image = django.db.models.ImageField(
-        _('avatar'),
+        'image',
         upload_to=saving_path,
-        help_text='Will be rendered at 300x300 px',
+        help_text='Will be rendered at 300px',
     )
+
+    class Meta:
+        verbose_name = 'avatar image'
+        verbose_name_plural = 'avatar images'
+        default_related_name = 'avatar_image'
+
+    def get_image_300x300(self) -> tp.Any:
+        return sorl.thumbnail.get_thumbnail(
+            self.image,
+            '300x300',
+            crop='center',
+            quality=51,
+        )
+
+    def image_tmb(self) -> tp.AnyStr:
+        if self.image:
+            return django.utils.html.mark_safe(
+                f'<img src="{self.get_image_300x300().url}">',
+            )
+        return 'No picture'
+
+    image_tmb.short_description = 'image'
 
     user = django.db.models.ForeignKey(
         User,

@@ -3,7 +3,7 @@ import django.contrib.admin
 import users.models
 
 
-class UserAvatar(django.contrib.admin.StackedInline):
+class UserAvatar(django.contrib.admin.TabularInline):
     model = users.models.UserAvatar
     extra = 1
 
