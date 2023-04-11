@@ -3,7 +3,7 @@ import django.forms
 import events.models
 
 
-class EventCreateModel(django.forms.ModelForm):
+class EventCrUpdForm(django.forms.ModelForm):
     class Meta:
         model = events.models.Event
         fields = [
