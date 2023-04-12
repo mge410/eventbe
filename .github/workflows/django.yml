@@ -51,5 +51,5 @@ jobs:
           pip install -r requirements/requirements_test.txt
       - name: Run Django tests
         run: |
-          cd lyceum
+          cd eventbe
           python manage.py test
