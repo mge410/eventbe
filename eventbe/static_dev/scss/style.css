@@ -6,6 +6,18 @@
   background: #47af77;
 }
 
+.info__item__about2 {
+  text-decoration: none;
+  color: #000000;
+  transition-duration: 500ms;
+}
+.info__item__about2:hover {
+  color: #000000;
+  transition-duration: 500ms;
+  transform: scale(1.1, 1.1);
+  box-shadow: 4px 4px 73px -15px rgba(34, 60, 80, 0.51);
+}
+
 body {
   background: rgba(252, 241, 226, 0.9);
 }
@@ -46,13 +58,13 @@ body {
 }
 .logo-bg {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 12rem;
+  height: 12rem;
   left: 0px;
   top: 0px;
   z-index: 1;
   background: #44B35C;
-  border-radius: 0px 0px 0px 130.7189542484px;
+  border-radius: 0px 0px 0px 7.8431372549rem;
   transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 

@@ -16,7 +16,7 @@
 
           <div class="info__item__welcome2 text-center">
             <div class="info__text-welcome">
-              место самых<br />
+              место самых<br>
               интересных встреч
             </div>
           </div>
@@ -39,14 +39,14 @@
             обстановке
           </p>
 
-          <div class="info__item__about2">
-            <div class="info__more-info d-flex justify-content-around">
+          <a class="info__item__about2"  href="{% url 'about:about' %}">
+            <div class="info__more-info d-flex justify-content-around" >
               <div class="d-inline"> Узнать больше</div>
               <div class=" d-inline">
                 <img class="info__img-arrow" src={% static 'img/arrow12.png' %} >
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -63,15 +63,16 @@
             Мы уверены что в списке событий найдется что-то для вас ;)
           </p>
 
-          <div class="info__item__about2">
+          <a class="info__item__about2 info__text-style" href="{% url 'events:events_list' %}">
             <div class="info__more-info d-flex justify-content-around">
               <div class="d-inline"> к событиям </div>
-              <div class=" d-inline">
+              <div class="d-inline">
                 <img class="info__img-arrow" src={% static 'img/arrow12.png' %} >
               </div>
             </div>
+          </a>
           </div>
-        </div>
+       
         
         <div class="info__item__high-img d-flex justify-content-center align-items-center">
           <img class="" src={% static 'img/frog.png' %} >

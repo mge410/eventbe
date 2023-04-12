@@ -1,4 +1,4 @@
-$logo_size: 200px;
+$logo_size: 12rem;
 
 
 %btn-green {
@@ -9,6 +9,23 @@ $logo_size: 200px;
         background: #47af77;
     }
 }
+
+%btn-block {
+    text-decoration: none;
+    color: #000000;
+
+    transition-duration: 500ms;
+
+    &:hover {
+        color: #000000;
+        transition-duration: 500ms;
+        transform: scale(1.1, 1.1);
+        -webkit-box-shadow: 4px 4px 73px -15px rgba(34, 60, 80, 0.51);
+        -moz-box-shadow: 4px 4px 73px -15px rgba(34, 60, 80, 0.51);
+        box-shadow: 4px 4px 73px -15px rgba(34, 60, 80, 0.51);
+    }
+}
+
 
 body {
     background: rgba(252, 241, 226, 0.9);
@@ -73,7 +90,7 @@ body {
 
     z-index: 1;
     background: #44B35C;
-    border-radius: 0px 0px 0px ($logo_size * 100) /153;
+    border-radius: 0px 0px 0px (($logo_size * 100) / 153);
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -108,7 +125,6 @@ footer {
         box-sizing: auto;
     }
 
-    &__bg-img {}
 
     &__list-items {
         position: absolute;
@@ -123,6 +139,7 @@ footer {
 
     &__item {
         &__welcome {
+
             position: relative;
             width: 1042px;
             height: 537px;
@@ -144,6 +161,7 @@ footer {
             border-radius: 149px;
         }
 
+
         &__high-img {
             width: 341px;
             height: 481px;
@@ -162,6 +180,8 @@ footer {
         }
 
         &__about2 {
+            @extend %btn-block;
+
             position: absolute;
             width: 330px;
             height: 90px;

@@ -13,22 +13,22 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
         <li class="nav-item">
-          <a class="nav-link navbar__nav-link" href="#">
+          <a class="nav-link navbar__nav-link" href="{% url 'homepage:main' %}">
             {% translate 'Home' %}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link navbar__nav-link" href="#">
+          <a class="nav-link navbar__nav-link" href="{% url 'events:events_list' %}">
             {% translate 'Events' %}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link navbar__nav-link" href="#">
+          <a class="nav-link navbar__nav-link" href="{% url 'map:map' %}">
             {% translate 'Maps' %}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link navbar__nav-link" href="#">
+          <a class="nav-link navbar__nav-link" href="{% url 'about:about' %}">
             {% translate 'About' %}
           </a>
         </li>
