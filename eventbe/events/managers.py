@@ -7,25 +7,14 @@ class EventManager(django.db.models.Manager):
     def events_list(self) -> django.db.models.QuerySet:
         return self.prefetch_events()
 
-    def events_search_by_name(self, name: str) -> django.db.models.QuerySet:
-        return (
-            self.prefetch_events()
-            .filter(
-                title=name,
-            )
-        )
-
     def events_detail(self) -> django.db.models.QuerySet:
-        return (
-            self.prefetch_events()
-            .prefetch_related(
-                django.db.models.Prefetch(
-                    f'{events.models.Event.comments.rel.related_name}',
-                    queryset=events.models.EventComment.objects.only(
-                        events.models.EventComment.author.field.name,
-                        events.models.EventComment.message.field.name,
-                    )
-                )
+        return self.prefetch_events().prefetch_related(
+            django.db.models.Prefetch(
+                f'{events.models.Event.comments.rel.related_name}',
+                queryset=events.models.EventComment.objects.only(
+                    events.models.EventComment.author.field.name,
+                    events.models.EventComment.message.field.name,
+                ),
             )
         )
 
@@ -41,19 +30,15 @@ class EventManager(django.db.models.Manager):
         )
 
     def events_online(self) -> django.db.models.QuerySet:
-        return (
-            self.prefetch_events().filter(
-                is_offline=False,
-                is_published=True,
-            )
+        return self.prefetch_events().filter(
+            is_offline=False,
+            is_published=True,
         )
 
     def events_offline(self) -> django.db.models.QuerySet:
-        return (
-            self.prefetch_events().filter(
-                is_offline=True,
-                is_published=True,
-            )
+        return self.prefetch_events().filter(
+            is_offline=True,
+            is_published=True,
         )
 
     def prefetch_events(self) -> django.db.models.QuerySet:
