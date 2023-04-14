@@ -6,20 +6,41 @@ import events.forms
 import events.models
 
 
-class EventListView(django.views.generic.ListView):
+class EventsListView(django.views.generic.ListView):
     template_name = 'events/event_list.html'
     context_object_name = 'events'
-    queryset = events.models.Event.objects.order_by(
-        events.models.Event.date,
-    ).only(
-        events.models.Event.events.models.Event.organizer,
-    )
+    queryset = events.models.Event.objects.events_list()
+
+
+class EventsSortedByDateView(django.views.generic.ListView):
+    template_name = 'events/event_list.html'
+    context_object_name = 'events'
+    queryset = events.models.Event.objects.events_new_to_old()
+
+
+class EventsOnline(django.views.generic.ListView):
+    template_name = 'events/event_list.html'
+    context_object_name = 'events'
+    queryset = events.models.Event.objects.events_online()
+
+
+class EventsOffline(django.views.generic.ListView):
+    template_name = 'events/event_list.html'
+    context_object_name = 'events'
+    queryset = events.models.Event.objects.events_offline()
+
+
+class EventDetail(django.views.generic.DetailView):
+    model = events.models.Event
+    template_name = 'events/event_detail.html'
+    pk_url_kwarg = 'id'
+    context_object_name = 'event'
 
 
 class EventCreateView(django.views.generic.CreateView):
     template_name = 'events/create_event.html'
     model = events.models.Event
-    form_class = events.forms.EventCrUpdForm
+    form_class = events.forms.EventCreateUpdateForm
 
     def form_valid(self, form):
         form.save()
@@ -32,7 +53,7 @@ class EventCreateView(django.views.generic.CreateView):
 class EventUpdateView(django.views.generic.UpdateView):
     template_name = 'events/update_event.html'
     model = events.models.Event
-    form_class = events.forms.EventCrUpdForm
+    form_class = events.forms.EventCreateUpdateForm
 
     def form_valid(self, form):
         form.save()

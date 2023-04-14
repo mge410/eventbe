@@ -5,8 +5,4 @@ import feedback.models
 
 @django.contrib.admin.register(feedback.models.Feedback)
 class FeedbackAdmin(django.contrib.admin.ModelAdmin):
-    list_display = (
-        feedback.models.Feedback.id.field.name,
-        feedback.models.Feedback.author.username.field.name,
-        feedback.models.Feedback.author.email.field.name,
-    )
+    list_display = (feedback.models.Feedback.id.field.name,)

@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 import sorl.thumbnail
 
 import core.models
+import events.managers
 import users.models
 
 
@@ -34,6 +35,8 @@ class Tag(django.db.models.Model):
 
 
 class Event(django.db.models.Model):
+    objects = events.managers.EventManager()
+
     class Status(django.db.models.TextChoices):
         public = 'pub', 'public'
         authorizedonly = 'authonly', 'authorized only'
@@ -138,12 +141,13 @@ class EventThumbnail(core.models.ImageModel):
 
     image_tmb.short_description = 'image'
 
-    event = django.db.models.ForeignKey(
-        Event,
-        on_delete=django.db.models.PROTECT,
+    events = django.db.models.OneToOneField(
+        to=Event,
+        verbose_name='main image',
+        on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
-        help_text=_('event thumbnail'),
+        help_text='main image',
     )
 
 
@@ -159,6 +163,7 @@ class EventGallery(core.models.ImageModel):
     class Meta:
         verbose_name = 'Event Gallery Photo'
         verbose_name_plural = 'Event Gallery Photos'
+        default_related_name = 'event_gallery'
 
 
 class EventComment(django.db.models.Model):
@@ -179,4 +184,11 @@ class EventComment(django.db.models.Model):
     event = django.db.models.ForeignKey(
         Event,
         on_delete=django.db.models.CASCADE,
+        verbose_name='comment',
+        help_text=_('comment'),
     )
+
+    class Meta:
+        verbose_name = 'comment'
+        verbose_name_plural = 'comments'
+        default_related_name = 'comments'

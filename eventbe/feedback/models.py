@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 import users.models
 
 
-class Feedback:
+class Feedback(django.db.models.Model):
     class Status(django.db.models.TextChoices):
         accepted = 'c', 'accepted'
         processed = 'b', 'processed'
