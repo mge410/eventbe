@@ -7,6 +7,7 @@ import sorl.thumbnail
 
 import core.models
 import users.models
+import events.managers
 
 
 class Tag(django.db.models.Model):
@@ -34,6 +35,8 @@ class Tag(django.db.models.Model):
 
 
 class Event(django.db.models.Model):
+    objects = events.managers.EventManager()
+
     class Status(django.db.models.TextChoices):
         public = 'pub', 'public'
         authorizedonly = 'authonly', 'authorized only'

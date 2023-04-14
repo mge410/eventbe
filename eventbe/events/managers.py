@@ -51,8 +51,8 @@ class EventManager(django.db.models.Manager):
                 django.db.models.Prefetch(
                     f'{events.models.Event.tags.field.name}',
                     queryset=events.models.Tag.objects.filter(
-                        is_published=True
-                    ).only(f'{events.models.Tag.name.field.name}'),
+                        is_active=True
+                    ).only(f'{events.models.Tag.title.field.name}'),
                 )
             )
             .only(

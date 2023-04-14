@@ -6,11 +6,11 @@ from django.urls import path
 
 import about.urls
 import events.urls
-import main.urls
+import home.urls
 import map.urls
 
 urlpatterns = [
-    path('', include(main.urls)),
+    path('', include(home.urls)),
     path('events/', include(events.urls)),
     path('about/', include(about.urls)),
     path('map/', include(map.urls)),
