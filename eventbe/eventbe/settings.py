@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import List
 
@@ -29,7 +30,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third party
     'debug_toolbar',
+    'sorl.thumbnail',
+    'django_cleanup.apps.CleanupConfig',
+    # Ours
+    'about.apps.AboutConfig',
+    'core.apps.CoreConfig',
+    'events.apps.EventsConfig',
+    'feedback.apps.FeedbackConfig',
+    'home.apps.HomeConfig',
+    'map.apps.MapConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +133,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')

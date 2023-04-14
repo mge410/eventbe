@@ -1,15 +1,16 @@
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
 
 import about.urls
 import events.urls
-import main.urls
+import home.urls
 import map.urls
 
 urlpatterns = [
-    path('', include(main.urls)),
+    path('', include(home.urls)),
     path('events/', include(events.urls)),
     path('about/', include(about.urls)),
     path('map/', include(map.urls)),
@@ -17,6 +18,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )
     import debug_toolbar
 
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
