@@ -10,7 +10,6 @@ jobs:
     name: runner / black and flake8
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Check out source repository
         uses: actions/checkout@v3
       - name: Set up Python environment
