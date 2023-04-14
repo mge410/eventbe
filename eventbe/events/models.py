@@ -6,8 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 import sorl.thumbnail
 
 import core.models
-import users.models
 import events.managers
+import users.models
 
 
 class Tag(django.db.models.Model):
