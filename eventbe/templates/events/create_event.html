@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+<title>{% translate "Create Event " %}</title>
+{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+  <h2 class="mb-5">{% translate "Create an event " %}</h2>
+  {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <form method="post">
+      {% csrf_token %}
+      <ul class="list-group list-group-flush">
+        {{ form.as_p }}
+      </ul>
+      <input type="submit" value={% translate "Create " %} class="btn btn-secondary">
+    </form>
+  {% endif %}
+</div>
+{% endblock %}
