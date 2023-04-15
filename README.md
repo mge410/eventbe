@@ -26,13 +26,13 @@
 
 Основные зависимости:  
 ```python -m pip install --upgrade pip```   
-```pip install -r requirements.txt ```  
+```pip install -r prod.txt ```  
 
 Зависимости для разработки  
-``` pip install -r requirements_dev.txt```  
+``` pip install -r dev.txt```  
 
 Зависимости для тестирования   
-``` pip install -r requirements_test.txt```
+``` pip install -r test.txt```
 
 Схема Базы Данных в проекте  
 ![alt text](database.PNG)
