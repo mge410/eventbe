@@ -8,6 +8,8 @@ env = environ.Env(
     DEBUG=(bool, True),
     SECRET_KEY=(str, 'secret_key'),
     ALLOWED_HOSTS=(list, ['*']),
+    DEFAULT_USER_ACTIVITY=(bool, True),
+    MAIL_SENDER=(str, 'v0v.voron2005@yandex.ru'),
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,6 +18,10 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
+
+DEFAULT_USER_ACTIVITY = env('DEFAULT_USER_ACTIVITY')
+
+MAIL_SENDER = env('MAIL_SENDER')
 
 ALLOWED_HOSTS: List[str] = env('ALLOWED_HOSTS')
 INTERNAL_IPS = ['127.0.0.1']
@@ -120,17 +126,17 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+LOGIN_REDIRECT_URL = '/auth/profile/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -138,5 +144,3 @@ AUTH_USER_MODEL = 'users.User'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
