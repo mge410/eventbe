@@ -7,7 +7,7 @@ from django.urls import reverse
 
 class StaticURLTests(TestCase):
     def test_main_endpoint_status(self) -> None:
-        url = reverse('homepage:main')
+        url = reverse('homepage:home')
 
         response = Client().get(url)
         self.assertEqual(
