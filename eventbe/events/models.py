@@ -46,15 +46,18 @@ class Event(django.db.models.Model):
         _('title'),
         max_length=40,
         blank=False,
+        help_text=_('Provide a title for your event'),
     )
     description = django.db.models.TextField(
         _('description'),
         max_length=300,
         blank=False,
+        help_text=_('Describe your event'),
     )
     date = django.db.models.DateTimeField(
         _('date & time'),
         blank=False,
+        help_text=_('Set date & time for your event'),
     )
     location_x = django.db.models.FloatField(
         _('location x'),
@@ -68,8 +71,8 @@ class Event(django.db.models.Model):
         _('status'),
         default=Status.public,
         choices=Status.choices,
-        help_text=_('Event Status'),
         max_length=8,
+        help_text=_('Set status for your event'),
     )
     created_at = django.db.models.DateField(
         _('created at'),
@@ -78,6 +81,7 @@ class Event(django.db.models.Model):
     is_offline = django.db.models.BooleanField(
         _('is offline'),
         default=False,
+        help_text=_('Click if the event is offline'),
     )
     is_active = django.db.models.BooleanField(
         _('is active'),
@@ -92,7 +96,11 @@ class Event(django.db.models.Model):
         default=False,
     )
 
-    tags = django.db.models.ManyToManyField(Tag)
+    tags = django.db.models.ManyToManyField(
+        to=Tag,
+        related_name='tags',
+        help_text=_('Select appropriate tags for your event'),
+    )
 
     organizer = django.db.models.ForeignKey(
         users.models.User,
@@ -111,7 +119,16 @@ class Event(django.db.models.Model):
 
 class EventThumbnail(core.models.ImageModel):
     def saving_path(self, name):
-        return f'uploads/useravatar/{self.user.id}/{name}'
+        return f'uploads/eventthumbnail/{self.events.id}/{name}'
+
+    events = django.db.models.OneToOneField(
+        to=Event,
+        verbose_name='main image',
+        on_delete=django.db.models.CASCADE,
+        null=True,
+        blank=True,
+        help_text='main image',
+    )
 
     image = django.db.models.ImageField(
         'image',
@@ -141,15 +158,6 @@ class EventThumbnail(core.models.ImageModel):
 
     image_tmb.short_description = 'image'
 
-    events = django.db.models.OneToOneField(
-        to=Event,
-        verbose_name='main image',
-        on_delete=django.db.models.CASCADE,
-        null=True,
-        blank=True,
-        help_text='main image',
-    )
-
 
 class EventGallery(core.models.ImageModel):
     gallery_images = django.db.models.ForeignKey(
@@ -170,7 +178,7 @@ class EventComment(django.db.models.Model):
     author = django.db.models.ForeignKey(
         users.models.User,
         on_delete=django.db.models.CASCADE,
-        help_text=_('comment author'),
+        help_text=_('Comment author'),
     )
 
     message = django.db.models.TextField(
@@ -178,14 +186,14 @@ class EventComment(django.db.models.Model):
         max_length=100,
         blank=False,
         null=False,
-        help_text=_('Write the comment here'),
+        help_text=_('Your comment'),
     )
 
     event = django.db.models.ForeignKey(
         Event,
         on_delete=django.db.models.CASCADE,
         verbose_name='comment',
-        help_text=_('comment'),
+        help_text=_('commented event'),
     )
 
     class Meta:

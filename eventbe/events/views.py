@@ -1,3 +1,4 @@
+import django.contrib.messages as messages
 import django.db.models
 import django.urls
 import django.views.generic
@@ -43,11 +44,20 @@ class EventCreateView(django.views.generic.CreateView):
     form_class = events.forms.EventCreateUpdateForm
 
     def form_valid(self, form):
-        form.save()
+        creator = self.request.user
+        event = form.save(commit=False)
+        event.organizer = creator
+        event.save()
+        # send mail
         return super().form_valid(form)
 
     def get_success_url(self, *args, **kwargs) -> str:
-        return django.urls.reverse('event:successfullycreated')
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            'The event is successfully created',
+        )
+        return django.urls.reverse('events:events_list')
 
 
 class EventUpdateView(django.views.generic.UpdateView):
@@ -57,7 +67,13 @@ class EventUpdateView(django.views.generic.UpdateView):
 
     def form_valid(self, form):
         form.save()
+        # send mail
         return super().form_valid(form)
 
     def get_success_url(self, *args, **kwargs) -> str:
-        return django.urls.reverse('event:successfullycreated')
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            'The event is successfully updated',
+        )
+        return django.urls.reverse('events:events_list')

@@ -37,5 +37,5 @@ class Feedback(django.db.models.Model):
 
     class Meta:
         ordering = ('created_at',)
-        verbose_name = 'mail'
-        verbose_name_plural = 'mails'
+        verbose_name = 'feedback'
+        verbose_name_plural = 'feedbacks'
