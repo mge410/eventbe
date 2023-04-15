@@ -1,0 +1,48 @@
+from django import forms
+import django.contrib.auth.forms
+
+from users.models import User
+
+
+class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
+    email = forms.EmailField(
+        label='Email', max_length=254, help_text='Enter email please'
+    )
+
+    class Meta(django.contrib.auth.forms.UserCreationForm.Meta):
+        model = User
+        fields = ('username', 'email')
+
+
+class CustomUserChangeForm(django.contrib.auth.forms.UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomUserChangeForm, self).__init__(*args, **kwargs)
+
+    password = None
+
+    class Meta:
+        model = User
+        field_classes = {'username': django.contrib.auth.forms.UsernameField}
+        fields = [
+            User.email.field.name,
+            User.username.field.name,
+            User.first_name.field.name,
+            User.last_name.field.name,
+        ]
+
+
+class UserChangeImageForm(django.contrib.auth.forms.UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(UserChangeImageForm, self).__init__(*args, **kwargs)
+
+    password = None
+
+    class Meta:
+        model = User
+        field_classes = {'username': django.contrib.auth.forms.UsernameField}
+        fields = [
+            User.email.field.name,
+            User.username.field.name,
+            User.first_name.field.name,
+            User.last_name.field.name,
+        ]
