@@ -111,7 +111,16 @@ class Event(django.db.models.Model):
 
 class EventThumbnail(core.models.ImageModel):
     def saving_path(self, name):
-        return f'uploads/useravatar/{self.user.id}/{name}'
+        return f'uploads/eventthumbnail/{self.events.id}/{name}'
+
+    events = django.db.models.OneToOneField(
+        to=Event,
+        verbose_name='main image',
+        on_delete=django.db.models.CASCADE,
+        null=True,
+        blank=True,
+        help_text='main image',
+    )
 
     image = django.db.models.ImageField(
         'image',
@@ -140,15 +149,6 @@ class EventThumbnail(core.models.ImageModel):
         return 'No picture'
 
     image_tmb.short_description = 'image'
-
-    events = django.db.models.OneToOneField(
-        to=Event,
-        verbose_name='main image',
-        on_delete=django.db.models.CASCADE,
-        null=True,
-        blank=True,
-        help_text='main image',
-    )
 
 
 class EventGallery(core.models.ImageModel):
