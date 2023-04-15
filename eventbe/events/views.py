@@ -6,29 +6,27 @@ import django.views.generic
 import events.forms
 import events.models
 
-class EventsListView(TemplateView):
-    template_name = 'events/events_list.html'
 
 class EventsListView(django.views.generic.ListView):
-    template_name = 'events/event_list.html'
+    template_name = 'events/events_list.html'
     context_object_name = 'events'
     queryset = events.models.Event.objects.events_list()
 
 
 class EventsSortedByDateView(django.views.generic.ListView):
-    template_name = 'events/event_list.html'
+    template_name = 'events/events_list.html'
     context_object_name = 'events'
     queryset = events.models.Event.objects.events_new_to_old()
 
 
 class EventsOnline(django.views.generic.ListView):
-    template_name = 'events/event_list.html'
+    template_name = 'events/events_list.html'
     context_object_name = 'events'
     queryset = events.models.Event.objects.events_online()
 
 
 class EventsOffline(django.views.generic.ListView):
-    template_name = 'events/event_list.html'
+    template_name = 'events/events_list.html'
     context_object_name = 'events'
     queryset = events.models.Event.objects.events_offline()
 
