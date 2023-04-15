@@ -1,0 +1,266 @@
+[
+{
+  "model": "events.tag",
+  "pk": 1,
+  "fields": {
+    "title": "TestTag_1",
+    "slug": "asdasd",
+    "created_at": "2023-04-09",
+    "is_active": true
+  }
+},
+{
+  "model": "events.tag",
+  "pk": 2,
+  "fields": {
+    "title": "TestTag_2",
+    "slug": "000_001",
+    "created_at": "2023-04-15",
+    "is_active": true
+  }
+},
+{
+  "model": "events.tag",
+  "pk": 3,
+  "fields": {
+    "title": "TestTag_3",
+    "slug": "000_002",
+    "created_at": "2023-04-15",
+    "is_active": false
+  }
+},
+{
+  "model": "events.event",
+  "pk": 1,
+  "fields": {
+    "title": "TestEvent_1",
+    "description": "",
+    "date": "2023-04-09T18:15:47Z",
+    "location_x": 0.0,
+    "location_y": 0.0,
+    "status": "pub",
+    "created_at": "2023-04-09",
+    "is_offline": false,
+    "is_active": true,
+    "is_published": true,
+    "is_frozen": false,
+    "organizer": 1,
+    "tags": []
+  }
+},
+{
+  "model": "events.event",
+  "pk": 2,
+  "fields": {
+    "title": "TestEvent_2",
+    "description": "",
+    "date": "2023-04-15T10:32:40Z",
+    "location_x": 123.0,
+    "location_y": 123.0,
+    "status": "authonly",
+    "created_at": "2023-04-15",
+    "is_offline": false,
+    "is_active": true,
+    "is_published": true,
+    "is_frozen": true,
+    "organizer": 1,
+    "tags": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "events.event",
+  "pk": 3,
+  "fields": {
+    "title": "TestEvent_3",
+    "description": "",
+    "date": "2023-04-15T11:25:02Z",
+    "location_x": -3.0,
+    "location_y": 4.0,
+    "status": "priv",
+    "created_at": "2023-04-15",
+    "is_offline": false,
+    "is_active": true,
+    "is_published": false,
+    "is_frozen": false,
+    "organizer": 3,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "events.event",
+  "pk": 4,
+  "fields": {
+    "title": "TestEvent_4",
+    "description": "Description for TestEvent_4",
+    "date": "2023-10-10T05:00:00Z",
+    "location_x": 3.0,
+    "location_y": 6.0,
+    "status": "pub",
+    "created_at": "2023-04-15",
+    "is_offline": true,
+    "is_active": true,
+    "is_published": true,
+    "is_frozen": false,
+    "organizer": 1,
+    "tags": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "events.eventthumbnail",
+  "pk": 1,
+  "fields": {
+    "events": 2,
+    "image": "uploads/eventthumbnail/2/mitable.png"
+  }
+},
+{
+  "model": "events.eventthumbnail",
+  "pk": 2,
+  "fields": {
+    "events": 3,
+    "image": "uploads/eventthumbnail/3/moonboy.png"
+  }
+},
+{
+  "model": "events.eventgallery",
+  "pk": 1,
+  "fields": {
+    "image": "pictures/heisenberg.png",
+    "gallery_images": 2
+  }
+},
+{
+  "model": "events.eventgallery",
+  "pk": 2,
+  "fields": {
+    "image": "pictures/johnwick.png",
+    "gallery_images": 2
+  }
+},
+{
+  "model": "events.eventgallery",
+  "pk": 3,
+  "fields": {
+    "image": "pictures/git.jpg",
+    "gallery_images": 3
+  }
+},
+{
+  "model": "events.eventgallery",
+  "pk": 4,
+  "fields": {
+    "image": "pictures/img.png",
+    "gallery_images": 3
+  }
+},
+{
+  "model": "events.eventcomment",
+  "pk": 1,
+  "fields": {
+    "author": 1,
+    "message": "Amazing Event. Recommend!",
+    "event": 1
+  }
+},
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$260000$CGbyUvmoiImTKL6Wzb2DLd$EiSBFHGZNU8pJkeSCpQUu2RQd8YyBgaeQolm589cCRY=",
+    "last_login": "2023-04-14T13:40:45.173Z",
+    "is_superuser": true,
+    "username": "superuser_1",
+    "first_name": "",
+    "last_name": "",
+    "email": "stantom16@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2023-04-08T10:05:01Z",
+    "status": "unauth",
+    "coins": 0,
+    "events_visited": 0,
+    "events_organized": 0,
+    "event_search_distance": 100,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "defaultuser_1",
+    "first_name": "default",
+    "last_name": "user",
+    "email": "defaultuser@defaultuser.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-04-15T10:46:32Z",
+    "status": "auth",
+    "coins": 10,
+    "events_visited": 5,
+    "events_organized": 1,
+    "event_search_distance": 110,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 3,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "staffuser_1",
+    "first_name": "staff",
+    "last_name": "user",
+    "email": "staffuser@staffuser.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2023-04-15T11:22:22Z",
+    "status": "adm",
+    "coins": 6,
+    "events_visited": 1,
+    "events_organized": 2,
+    "event_search_distance": 105,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.useravatar",
+  "pk": 1,
+  "fields": {
+    "image": "uploads/useravatar/1/kittenprns-kitten.gif",
+    "user": 1
+  }
+},
+{
+  "model": "users.useravatar",
+  "pk": 2,
+  "fields": {
+    "image": "uploads/useravatar/2/zeus.png",
+    "user": 2
+  }
+},
+{
+  "model": "users.useravatar",
+  "pk": 3,
+  "fields": {
+    "image": "uploads/useravatar/3/discord_sigma.png",
+    "user": 3
+  }
+}
+]
