@@ -1,6 +1,6 @@
 # eventbe
 
-[![Python package](https://github.com/mge410/eventbe/actions/workflows/python-package.yml/badge.svg)](https://github.com/mge410/eventbe/actions/workflows/python-package.yml)
+[![Django and Linter tests](https://github.com/mge410/eventbe/actions/workflows/django.yml/badge.svg)](https://github.com/mge410/eventbe/actions/workflows/django.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 **Запуск проекта**
