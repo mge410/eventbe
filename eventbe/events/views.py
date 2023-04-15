@@ -2,4 +2,4 @@ from django.views.generic import TemplateView
 
 
 class EventsListView(TemplateView):
-    template_name = 'layouts/base.html'
+    template_name = 'events/events_list.html'

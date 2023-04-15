@@ -1,0 +1,61 @@
+{% extends 'layouts/base.html' %} 
+{% load static %} 
+{% load i18n %} 
+{% block content %}
+
+<div class="events mx-auto col-9">
+  <div class="events__search mx-auto col-12 row">
+    <div class="events__tags d-flex flex-wrap col-6">
+      {% for i in '0123456789'|make_list %}
+      <div class="tag">Tag {{ i }}</div>
+      {% endfor %}
+    </div>
+
+    <div
+      class="events__filter col-6 d-flex align-items-center justify-content-end"
+    >
+      <div class="events__filter-btns">
+        <button class="btn events__search-btn d-block mb-3 col-12">
+          {% translate 'Search' %}
+        </button>
+        <button class="btn events__apply-btn d-block col-12">
+          {% translate 'Apply' %}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="events__events-list d-flex flex-wrap justify-content-around col-12"
+  >
+    {% for i in '0123456789'|make_list %}
+    <div class="card event-card">
+      <img
+        class="card-img-top"
+        src="{% static 'img/catcat-logo.png' %}"
+        alt="Card image cap"
+      />
+      <div class="card-body">
+        <h5 class="card-title">Card title {{ i }}</h5>
+        <p class="card-text">
+          {{ i }} Some quick example text to build on the card title and make up
+          the bulk of the card's content.
+        </p>
+        <a href="#" class="btn btn-green">{% translate 'Follow' %} </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <nav class="col-12 events__pagination-nav d-flex justify-content-center" aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">{% translate "Previous" %}</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">{% translate "Next" %}</a></li>
+    </ul>
+  </nav>
+
+</div>
+{% endblock content %}
