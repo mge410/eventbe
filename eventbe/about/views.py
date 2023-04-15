@@ -1,5 +1,5 @@
-from django.views.generic import TemplateView
+import django.views.generic.base
 
 
-class AboutView(TemplateView):
-    template_name = 'layouts/base.html'
+class AboutView(django.views.generic.base.TemplateView):
+    template_name = 'layouts/layout.html'
