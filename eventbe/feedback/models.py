@@ -1,8 +1,6 @@
 import django.db.models
 from django.utils.translation import ugettext_lazy as _
 
-import users.models
-
 
 class Feedback(django.db.models.Model):
     class Status(django.db.models.TextChoices):
@@ -11,9 +9,16 @@ class Feedback(django.db.models.Model):
         replied = 'a', 'replied'
 
     text = django.db.models.TextField(
-        _('text field'),
+        _('message *'),
         max_length=200,
         blank=False,
+        help_text=_('Feedback message'),
+    )
+
+    email = django.db.models.EmailField(
+        _('email *'),
+        max_length=254,
+        help_text=_('Your email address'),
     )
 
     created_at = django.db.models.DateTimeField(
@@ -27,12 +32,6 @@ class Feedback(django.db.models.Model):
         default=Status.accepted,
         choices=Status.choices,
         help_text='Feedback status',
-    )
-
-    author = django.db.models.ForeignKey(
-        users.models.User,
-        on_delete=django.db.models.CASCADE,
-        verbose_name=_('feedback author'),
     )
 
     class Meta:
