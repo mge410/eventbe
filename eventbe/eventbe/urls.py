@@ -1,21 +1,34 @@
-"""eventbe URL Configuration
+from django.conf import settings
+from django.conf.urls.static import static
+import django.contrib.admin
+import django.contrib.auth.urls
+import django.urls
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path
+import about.urls
+import events.urls
+import feedback.urls
+import home.urls
+import map.urls
+import users.urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    django.urls.path('', django.urls.include(home.urls)),
+    django.urls.path('events/', django.urls.include(events.urls)),
+    django.urls.path('about/', django.urls.include(about.urls)),
+    django.urls.path('map/', django.urls.include(map.urls)),
+    django.urls.path('admin/', django.contrib.admin.site.urls),
+    django.urls.path('auth/', django.urls.include(users.urls)),
+    django.urls.path('auth/', django.urls.include(django.contrib.auth.urls)),
+    django.urls.path('feedback/', django.urls.include(feedback.urls)),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )
+    import debug_toolbar
+
+    urlpatterns.append(
+        django.urls.path('__debug__/', django.urls.include(debug_toolbar.urls))
+    )

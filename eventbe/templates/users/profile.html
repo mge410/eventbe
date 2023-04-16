@@ -1,0 +1,96 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+<title>{% translate 'Your profile'%}</title>
+{% endblock %}
+
+{% block content %}
+<section class="mb-3">
+  <div class="container">
+    <h1 class="text-center mt-4 mb-5">
+      {% translate 'Your profile' %}
+    </h1>
+  </div>
+</section>
+<!--================ Start Blog Post Area =================-->
+<div class="blog-post-area section-margin mt-4">
+  <div class="container">
+    <section class="row justify-content-center">
+      <div class="col-lg-12">
+        <!--================ Non-Editable Profile Data =================-->
+        <div class="row justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Current status: <i><b>{{ user.get_status_display }}</i></b>
+              </li>
+              <li class="list-group-item">
+                Coins earned: <i><b>{{ user.coins }}</b></i>
+              </li>
+              <li class="list-group-item">
+                Events visited: <i><b>{{ user.events_visited }}</b></i>
+              </li>
+              <li class="list-group-item">
+                Events organized: <i><b>{{ user.events_organized }}</b></i>
+              </li>
+            </ul>
+        </div>
+        <!--================ Editable Profile Data =================-->
+        <form class="basic-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if user.avatar.image %}
+        <div class="text-center m-4">
+          <h3>{% translate 'Profile photo'%}</h3>
+          <img class="border-info profile-image rounded-3" src="{{user.avatar.get_image_300x300.url}}" alt="">
+        </div>
+        {% endif %}
+        <div class="controls text-center m-5">
+          <!--================ Profile Image =================-->
+          {% for field in avatarform %}
+          <div class="row justify-content-center">
+            <div class="col-md-4 mb-4">
+              <div class="form-group"> <label class="mr-3" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+                {% for error in field.errors %}
+                  <div class="help-block with-errors text-danger">{{ error|safe }}</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          
+          <!--================ Other Data =================-->
+          {% for field in form %}
+          <div class="row justify-content-center">
+            <div class="col-md-4 mb-4">
+              <div class="form-group"> <label class="mr-3 d-block" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+                {% for error in field.errors %}
+                  <div class="help-block with-errors text-danger">{{ error|safe }}</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+          <div class="row justify-content-center">
+            <div class="col-md-12"> <input type="submit" class="btn btn-success btn-send" value="{% translate 'Update your profile' %}"> </div>
+          </div>
+        </div>
+      </form>
+      </div>
+      <!--================ Profile Actions =================-->
+      <hr class="border border-secondary border-3 opacity-75">
+      <div class="row actions justify-content-center">
+        <div class="row-item m-3">
+          <h2 class="mb-1 text-center">{% translate 'Actions' %}</h2>
+          <ul class="list-group d-flex flex-column align-items-center">
+            <li class="list-group-item text-center w-25"><button class="btn btn-success " type="button" id="coffee_count">{% translate 'Drink coffee' %}</button></li>
+            <li class="list-group-item text-center w-25"><a class="btn btn-success" href="{% url 'users:password_change' %}">{% translate 'Change password' %}</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

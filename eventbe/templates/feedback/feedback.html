@@ -1,0 +1,25 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Feedback" %}
+{% endblock %}
+
+{% block content %}
+  <div class="container text-center">
+    <h2 class="mb-5">{% translate "Feedback" %}</h2>
+    {% if messages %}
+      <ul class="messages">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <form method="post">
+        {% include 'include/form.html' %}
+        <input type="submit" value={% translate "Send" %} class="btn btn-secondary">
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}
