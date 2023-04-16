@@ -15,6 +15,7 @@ from django.utils import timezone
 from django.views import View
 
 import users.forms
+import users.models
 
 
 class Register(View):
@@ -71,7 +72,7 @@ class ActivateUsers(View):
             user.is_active = True
             user.save()
             messages.success(
-                request, 'Your account has been' ' successfully activated'
+                request, 'Your account has been successfully activated'
             )
         else:
             messages.success(request, 'This user is already activated')
@@ -85,18 +86,37 @@ class UsersProfile(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         user = request.user
         form = users.forms.CustomUserChangeForm(instance=user)
-        context = {'form': form, 'profile_form': {}}
+        avatarform = users.forms.UserAvatarChangeForm()
+        context = {
+            'form': form,
+            'avatarform': avatarform,
+            'user': user,
+        }
         return render(request, self.template_name, context)
 
     def post(self, request: HttpRequest) -> HttpResponse:
         user = request.user
 
-        form = users.forms.CustomUserChangeForm(request.POST, instance=user)
+        userdataform = users.forms.CustomUserChangeForm(
+            request.POST,
+            request.FILES,
+            instance=user,
+        )
+        avatarform = users.forms.UserAvatarChangeForm(
+            request.POST,
+            request.FILES,
+            instance=user.avatar,
+        )
 
-        if form.is_valid():
-            form.save()
+        if userdataform.is_valid() and avatarform.is_valid():
+            userdataform.save()
+            avatarform.save()
 
-        context = {'form': form, 'profile_form': {}}
+        context = {
+            'form': userdataform,
+            'avatarform': avatarform,
+            'user': user,
+        }
         return render(request, self.template_name, context)
 
 

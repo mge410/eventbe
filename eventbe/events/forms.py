@@ -17,7 +17,7 @@ class EventCreateUpdateForm(django.forms.ModelForm):
             events.models.Event.tags.field.name,
         ]
 
-        def __init__(self, *args, **kwargs):
+        def __init__(self, *args, **kwargs) -> None:
             super().__init__(*args, **kwargs)
             for field in self.fields.values():
                 field.widget.attrs['class'] = 'form-control'
