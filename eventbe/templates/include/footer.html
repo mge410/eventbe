@@ -1,1 +1,60 @@
-<footer></footer>
+{% load i18n %} {% load static %}
+
+<footer>
+  <div class="col-8 mx-auto footer__content">
+    <div class="row">
+      <ul class="col text-left">
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'homepage:home' %}">
+            {% translate 'Home' %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'events:events_list' %}">
+            {% translate 'Events' %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'map:map' %}">
+            {% translate 'Maps' %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'about:about' %}">
+            {% translate 'About' %}
+          </a>
+        </li>
+      </ul>
+
+      <ul class="col text-left">
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'homepage:home' %}">
+            {% translate 'Create event' %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'events:events_list' %}">
+            {% translate 'Profile' %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'map:map' %}">
+            {% translate 'Maps' %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'about:about' %}">
+            {% translate 'About' %}
+          </a>
+        </li>
+      </ul>
+
+      <div class="footer__contacts col-sm-12 col-md-5">
+        Our contacts
+        <a href=""> <img src="{% static 'img/telegram_logo.png' %}" alt="" /></a>
+        <a href=""> <img src="{% static 'img/discord_logo.png' %}" alt="" /></a>
+        <a href=""> <img src="{% static 'img/vk_logo.png' %}" alt="" /></a>
+      </div>
+    </div>
+  </div>
+</footer>
