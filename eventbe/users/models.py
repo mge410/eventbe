@@ -63,6 +63,7 @@ class UserAvatar(django.db.models.Model):
     image = django.db.models.ImageField(
         'image',
         upload_to=saving_path,
+        blank=True,
         help_text='Will be rendered at 300px',
     )
 
