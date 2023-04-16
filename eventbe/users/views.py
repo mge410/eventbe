@@ -35,10 +35,6 @@ class Register(View):
             avatar = users.models.UserAvatar(user=user)
             avatar.full_clean()
             avatar.save()
-            print(user)
-            print(user.avatar)
-            print(avatar)
-            print(avatar.user)
             if not settings.DEFAULT_USER_ACTIVITY:
                 absolute_url = self.request.build_absolute_uri(
                     reverse_lazy(
