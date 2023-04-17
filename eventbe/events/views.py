@@ -48,7 +48,6 @@ class EventCreateView(django.views.generic.CreateView):
         event = form.save(commit=False)
         event.organizer = creator
         event.save()
-        # send mail
         return super().form_valid(form)
 
     def get_success_url(self, *args, **kwargs) -> str:
@@ -67,7 +66,6 @@ class EventUpdateView(django.views.generic.UpdateView):
 
     def form_valid(self, form):
         form.save()
-        # send mail
         return super().form_valid(form)
 
     def get_success_url(self, *args, **kwargs) -> str:

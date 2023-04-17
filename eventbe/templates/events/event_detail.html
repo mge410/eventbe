@@ -1,0 +1,60 @@
+{% extends 'layouts/layout.html' %}
+{% load static %} 
+{% load i18n %} 
+
+{% block content %}
+<div class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+      <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
+      <!--================ Tags =================-->
+      <p>{{ event.tags.all|join:'   ' }}</p>
+      <h3 class="display-9">{{ event.date }}</h3>
+      <!--================ Description =================-->
+      <p class="lead">
+        <br>
+        {{ event.description }}
+      </p>
+      <!--================ Registration for the event =================-->
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">{% translate "Follow" %}</button>
+      </div>
+    </div>
+    <!--================ Thumbnail =================-->
+    {% if event.event_image.image %}
+      <div class="col-lg-4 offset-lg-1 p-0 mb-4 overflow-hidden">
+        <img class="rounded-3" src={{ event.event_image.get_image_300x300.url }} alt="..."/>
+      </div>
+    {% endif %}
+    <hr class="hr">
+    <!--================ Photo Gallery =================-->
+    <div id="imagegallery" class="">
+      {% for photo in event.gallery_images.image %}
+        <img src={{ photo.get_image_300x300.url }} alt="..." class="rounded mx-auto d-block mb-5"/>  
+      {% empty %}
+        <p class="text-center mb-3">{% translate "There are no additional photos to this event" %}</p>
+      {% endfor %}
+    </div>
+    <!--================ Comment List =================-->
+    <hr class="hr">
+    <div id="comments">
+      {% for comment in event.comments.all %}
+        <div class="card mb-4">
+          <div class="card-body">
+            <p>{{ comment.message }}</p>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-row align-items-center">
+                <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" alt="avatar" width="40" height="40">
+                <p class="small mb-0 ms-2">{{ comment.author.username }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-center mb-3">{% translate "No comments here yet... Be the first one to comment!" %}</p>
+      {% endfor %}
+    </div>
+    <!--================ Comment Form =================-->
+  </div>
+</div>
+{% endblock %}

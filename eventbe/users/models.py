@@ -47,7 +47,6 @@ class User(
         default=100,
         help_text=_('Distance(km) to search events in'),
     )
-    # desired_event_tags = django.db.models.ManyToManyField(Tag)
 
     objects = users.managers.UserManager()
 
