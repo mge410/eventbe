@@ -5,7 +5,7 @@ import events.models
 
 class EventManager(django.db.models.Manager):
     def events_list(self) -> django.db.models.QuerySet:
-        return self.prefetch_events()
+        return self.prefetch_events().filter(is_published=True)
 
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
