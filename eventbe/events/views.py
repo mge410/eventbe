@@ -1,12 +1,13 @@
 import django.contrib.messages as messages
+import django.core.paginator
 import django.db.models
+import django.shortcuts
 import django.urls
 import django.views.generic
-import django.core.paginator
+
 import events.filters
 import events.forms
 import events.models
-import django.shortcuts
 
 
 class EventsListView(django.views.generic.View):
@@ -19,7 +20,9 @@ class EventsListView(django.views.generic.View):
                 queryset=events.models.Event.objects.events_list(),
             )
         }
-        paginator = django.core.paginator.Paginator(context['filter'].qs, per_page=9)
+        paginator = django.core.paginator.Paginator(
+            context['filter'].qs, per_page=9
+        )
         context['page_obj'] = paginator.get_page(request.GET.get('page', 1))
         return django.shortcuts.render(request, self.template_name, context)
 
