@@ -17,10 +17,7 @@
     </ul>
   {% else %}
     <form method="post">
-      {% csrf_token %}
-      <ul class="list-group list-group-flush">
-        {{ form.as_p }}
-      </ul>
+      {% include 'include/form.html' %}
       <input type="submit" value={% translate "Create " %} class="btn btn-secondary">
     </form>
   {% endif %}

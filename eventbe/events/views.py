@@ -1,5 +1,7 @@
 import django.contrib.messages as messages
 import django.db.models
+import django.http
+import django.shortcuts
 import django.urls
 import django.views.generic
 
@@ -31,11 +33,43 @@ class EventsOffline(django.views.generic.ListView):
     queryset = events.models.Event.objects.events_offline()
 
 
-class EventDetail(django.views.generic.DetailView):
+class EventDetail(
+    django.views.generic.edit.FormMixin, django.views.generic.DetailView
+):
     model = events.models.Event
+    form_model = events.models.EventComment
     template_name = 'events/event_detail.html'
     pk_url_kwarg = 'id'
     context_object_name = 'event'
+    form_class = events.forms.EventCommentForm
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context.update({'user': self.request.user})
+        return context
+
+    def get_success_url(self, **kwargs):
+        return django.urls.reverse_lazy(
+            'events:detail',
+            kwargs={'id': kwargs['id']},
+        )
+
+    def post(
+        self,
+        request: django.http.HttpRequest,
+        *args,
+        **kwargs,
+    ) -> django.http.HttpResponse:
+        form = self.form_class(request.POST or None)
+        current_user = request.user
+        current_event_id = kwargs.get('id')
+        current_event = self.model.objects.get(id=current_event_id)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = current_user
+            comment.event = current_event
+            comment.save()
+        return django.shortcuts.redirect(self.get_success_url(**self.kwargs))
 
 
 class EventCreateView(django.views.generic.CreateView):
