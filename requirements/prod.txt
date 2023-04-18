@@ -4,6 +4,7 @@ asgiref==3.6.0
 django-cleanup==7.0.0
 django-debug-toolbar==4.0.0
 django-environ==0.10.0
+django-filter==23.1
 environ==1.0
 pytz==2023.3
 sorl-thumbnail==12.9.0

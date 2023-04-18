@@ -6,6 +6,7 @@ import django.urls
 
 import about.urls
 import events.urls
+import feedback.urls
 import home.urls
 import map.urls
 import users.urls
@@ -18,6 +19,7 @@ urlpatterns = [
     django.urls.path('admin/', django.contrib.admin.site.urls),
     django.urls.path('auth/', django.urls.include(users.urls)),
     django.urls.path('auth/', django.urls.include(django.contrib.auth.urls)),
+    django.urls.path('feedback/', django.urls.include(feedback.urls)),
 ]
 
 if settings.DEBUG:
