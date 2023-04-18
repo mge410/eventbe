@@ -5,7 +5,7 @@ import events.models
 
 class EventManager(django.db.models.Manager):
     def events_list(self) -> django.db.models.QuerySet:
-        return self.prefetch_events()
+        return self.prefetch_events().filter(is_published=True)
 
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
@@ -16,29 +16,6 @@ class EventManager(django.db.models.Manager):
                     events.models.EventComment.message.field.name,
                 ),
             )
-        )
-
-    def events_new_to_old(self) -> django.db.models.QuerySet:
-        return (
-            self.prefetch_events()
-            .filter(
-                is_published=True,
-            )
-            .order_by(
-                events.models.Event.created_at.field.name,
-            )
-        )
-
-    def events_online(self) -> django.db.models.QuerySet:
-        return self.prefetch_events().filter(
-            is_offline=False,
-            is_published=True,
-        )
-
-    def events_offline(self) -> django.db.models.QuerySet:
-        return self.prefetch_events().filter(
-            is_offline=True,
-            is_published=True,
         )
 
     def prefetch_events(self) -> django.db.models.QuerySet:
