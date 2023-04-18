@@ -1,9 +1,8 @@
 import django.contrib.messages as messages
+import django.core.paginator
 import django.core.serializers
 import django.db.models
 import django.http
-import django.core.paginator
-import django.db.models
 import django.shortcuts
 import django.urls
 import django.views.generic
