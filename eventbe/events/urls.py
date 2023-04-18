@@ -11,4 +11,5 @@ urlpatterns = [
         login_required(events.views.EventCreateView.as_view()),
         name='create_event',
     ),
+    path('ajax/all_events', events.views.get_ajax_all_events),
 ]

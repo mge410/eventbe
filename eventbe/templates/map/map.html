@@ -2,22 +2,12 @@
 {% load static %} 
 {% load i18n %} 
 {% block content %}
+<script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=ru_RU"
+type="text/javascript"></script>
+<script src="{% static 'js/ya_map_show_events.js' %}"
+type="text/javascript"></script>
+<script src="{% static 'jquery/jquery-3.2.1.min.js' %}"
+type="text/javascript"></script>
 
-<div id="map" style="width: 600px; height: 400px"></div>
-  <script type="text/javascript">
-    // Функция ymaps.ready() будет вызвана, когда
-    // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
-    ymaps.ready(init);
-    function init(){
-        // Создание карты.
-        var myMap = new ymaps.Map("map", {
-            // Координаты центра карты.
-            // Порядок по умолчанию: «широта, долгота».
-            // Чтобы не определять координаты центра карты вручную,
-            // воспользуйтесь инструментом Определение координат.
-            center: [55.76, 37.64],
-            zoom: 7
-        });
-    }
-</script>
+<div id="map" class="map-events mx-auto col-10"></div>
 {% endblock content %}
