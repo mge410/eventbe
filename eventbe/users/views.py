@@ -32,7 +32,9 @@ class Register(View):
             user = form.save(commit=False)
             user.is_active = settings.DEFAULT_USER_ACTIVITY
             user.save()
-
+            avatar = users.models.UserAvatar(user=user)
+            avatar.full_clean()
+            avatar.save()
             if not settings.DEFAULT_USER_ACTIVITY:
                 absolute_url = self.request.build_absolute_uri(
                     reverse_lazy(

@@ -10,6 +10,14 @@ class UserAvatar(django.contrib.admin.TabularInline):
     readonly_fields = (model.image_tmb,)
 
 
+@django.contrib.admin.register(users.models.UserAvatar)
+class UserAvatarAdmin(django.contrib.admin.ModelAdmin):
+    list_display = (
+        users.models.UserAvatar.id.field.name,
+        users.models.UserAvatar.image.field.name,
+    )
+
+
 @django.contrib.admin.register(users.models.User)
 class UserAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
