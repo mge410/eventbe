@@ -5,7 +5,7 @@ import users.models
 
 
 class UserManager(django.contrib.auth.models.UserManager):
-    def top_hundred_coins(self) -> django.db.models.QuerySet:
+    def top_fifty_coins(self) -> django.db.models.QuerySet:
         return (
             self.get_queryset()
             .order_by(users.models.User.coins.field.name)
@@ -17,7 +17,7 @@ class UserManager(django.contrib.auth.models.UserManager):
             )[:50]
         )
 
-    def top_hundred_visited(self) -> django.db.models.QuerySet:
+    def top_fifty_visited(self) -> django.db.models.QuerySet:
         return (
             self.get_queryset()
             .order_by(users.models.User.events_visited.field.name)
@@ -29,7 +29,7 @@ class UserManager(django.contrib.auth.models.UserManager):
             )[:50]
         )
 
-    def top_hundred_organized(self) -> django.db.models.QuerySet:
+    def top_fifty_organized(self) -> django.db.models.QuerySet:
         return (
             self.get_queryset()
             .order_by(users.models.User.events_organized.field.name)

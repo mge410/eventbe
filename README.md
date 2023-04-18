@@ -14,7 +14,7 @@
 | Windows:                                                                                                                                                                         | Linux:                                                                                                                                                                                                     |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **2** Заводим виртуальное окружение и активируем его: <br> ```python -m venv venv ``` <br> ```.\venv\Scripts\activate ```                                                        | **2** Заводим виртуальное окружение и активируем его: <br> ```python3 -m venv venv ``` <br> ```source venv/bin/activate ```                                                                                |
-| **3** Обновляем pip и качаем туда все что есть в requirements.txt: <br>```python -m pip install --upgrade pip``` <br> ```pip install -r .\requirements\requirements.txt ```      | **3** Обновляем pip и качаем туда все что есть в requirements.txt: <br> ```pip install -U pip``` или    ```python3 -m pip install --upgrade pip``` <br> ```pip install -r requirements/requirements.txt``` |
+| **3** Обновляем pip и качаем туда все что есть в requirements.txt: <br>```python -m pip install --upgrade pip``` <br> ```pip install -r .\requirements\prod.txt ```      | **3** Обновляем pip и качаем туда все что есть в requirements.txt: <br> ```pip install -U pip``` или    ```python3 -m pip install --upgrade pip``` <br> ```pip install -r requirements/prod.txt``` |
 | **4** Загружаем миграции для базы данных и наполняем их тестовыми данными <br>```python .\eventbe\manage.py migrate``` <br> ```python .\eventbe\manage.py loaddata data.json ``` | **4** Загружаем миграции для базы данных и наполняем их тестовыми данными <br>```python eventbe/manage.py migrate``` <br> ```python eventbe/manage.py loaddata data.json ```                               |
 | **5** Cоздаём пользователя администратора для доступа в админку  <br>```python .\eventbe\manage.py createsuperuser```                                                            | **5** Cоздаём пользователя администратора для доступа в админку <br>```python eventbe/manage.py createsuperuser``` <br>                                                                                    |
 | **6** Запускаем проект: <br> ``` python .\eventbe\manage.py runserver ```                                                                                                        | **6** Запускаем проект: <br> ```python3 eventbe/manage.py runserver```                                                                                                                                     |
@@ -26,13 +26,13 @@
 
 Основные зависимости:  
 ```python -m pip install --upgrade pip```   
-```pip install -r requirements.txt ```  
+```pip install -r prod.txt ```  
 
 Зависимости для разработки  
-``` pip install -r requirements_dev.txt```  
+``` pip install -r dev.txt```  
 
 Зависимости для тестирования   
-``` pip install -r requirements_test.txt```
+``` pip install -r test.txt```
 
 Схема Базы Данных в проекте  
 ![alt text](database.PNG)

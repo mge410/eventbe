@@ -45,7 +45,7 @@ class User(
     event_search_distance = django.db.models.PositiveIntegerField(
         _('event search distance'),
         default=100,
-        help_text=_('Distance to search events in'),
+        help_text=_('Distance(km) to search events in'),
     )
     # desired_event_tags = django.db.models.ManyToManyField(Tag)
 
@@ -88,10 +88,12 @@ class UserAvatar(django.db.models.Model):
 
     image_tmb.short_description = 'image'
 
-    user = django.db.models.ForeignKey(
+    user = django.db.models.OneToOneField(
         User,
-        on_delete=django.db.models.PROTECT,
+        on_delete=django.db.models.CASCADE,
         null=True,
+        unique=False,
         blank=True,
         help_text=_('user profile pic'),
+        related_name='avatar',
     )
