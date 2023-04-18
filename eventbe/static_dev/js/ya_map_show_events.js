@@ -15,7 +15,7 @@ function init() {
   myMap.container.fitToViewport();
 
   $.get({
-    url: "/events/ajax/all_events",
+    url: "/events/ajax/offline_events",
     success: function (data) {
       create_placemarks(myMap, data);
     },

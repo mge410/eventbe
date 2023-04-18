@@ -79,7 +79,6 @@ class EventUpdateView(django.views.generic.UpdateView):
 
 
 def get_ajax_all_events(request):
-    events_objects = events.models.Event.objects.events_offline()
-
-    response = {'events': [model for model in events_objects.values()]}
+    events_objects = events.models.Event.objects.offline_events()
+    response = {'events': [model for model in events_objects]}
     return django.http.JsonResponse(response)
