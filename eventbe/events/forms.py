@@ -17,14 +17,7 @@ class EventCreateUpdateForm(django.forms.ModelForm):
             events.models.Event.tags.field.name,
         ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
-            if field_name == events.models.Event.is_offline.field.name:
-                field.widget.attrs['class'] += ' form-check-input'
-            if field_name == events.models.Event.location_x.field.name:
-                field.widget.attrs['readonly'] = 'readonly'
-            if field_name == events.models.Event.location_y.field.name:
-                field.widget.attrs['readonly'] = 'readonly'
+        def __init__(self, *args, **kwargs) -> None:
+            super().__init__(*args, **kwargs)
+            for field in self.fields.values():
+                field.widget.attrs['class'] = 'form-control'
