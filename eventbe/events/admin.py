@@ -34,11 +34,13 @@ class EventAdmin(django.contrib.admin.ModelAdmin):
         events.models.Event.date.field.name,
         events.models.Event.status.field.name,
         events.models.Event.is_published.field.name,
+        events.models.Event.is_offline.field.name,
         events.models.Event.is_frozen.field.name,
     )
 
     list_editable = (
         events.models.Event.is_published.field.name,
+        events.models.Event.is_offline.field.name,
         events.models.Event.is_frozen.field.name,
     )
 
