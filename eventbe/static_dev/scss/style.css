@@ -20,6 +20,17 @@
 
 body {
   background: rgba(252, 241, 226, 0.9);
+  height: 100%;
+}
+
+.body-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 1 auto;
 }
 
 .btn-green {
@@ -84,8 +95,34 @@ body {
 }
 
 footer {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 39px;
+  color: #000000;
   background: #000;
-  height: 12rem;
+  height: 20rem;
+  margin-top: 3rem;
+}
+
+.footer__content {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+.footer__item {
+  list-style-type: none;
+}
+.footer__link {
+  color: #F7F6F5;
+  text-decoration: none;
+}
+.footer__link:hover {
+  color: rgba(247, 246, 245, 0.6745098039);
+}
+.footer__contacts {
+  color: #F7F6F5;
+  z-index: 4;
 }
 
 .info {
@@ -248,4 +285,9 @@ footer {
   background: #D9D9D9;
   border-radius: 30px;
   border: 0.1px solid rgb(146, 146, 146);
+}
+
+.map-events {
+  height: 40rem;
+  margin-top: 3rem;
 }/*# sourceMappingURL=style.css.map */
