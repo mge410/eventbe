@@ -21,10 +21,13 @@
         </div>
         {% endfor %}
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-around">
         <button class="btn events__search-btn d-block col-6" type="submit">
           {% translate 'Search' %}
         </button>
+        <a class="btn events__create-btn d-block col-3" type="submit" href="{% url 'events:create_event' %}">
+          {% translate 'Create event' %}
+        </a>
       </div>
     </form>
   </div>
@@ -35,9 +38,12 @@
         src="{% if event.event_image.get_image_300x300.url %} {{event.event_image.get_image_300x300.url}} {% else %} {% static 'img/users/avatars-default.jpg' %} {% endif %} "
         alt="Card image cap" />
       <div class="card-body">
-        <h5 class="card-title">{{ event.title }}</h5>
-        <p class="card-text">{{event.description}}</p>
-        <a href="#" class="btn btn-green">{% translate 'Follow' %} </a>
+        <h5 class="card-title"><a class="event-card__link" href="{% url 'events:detail' id=event.id %}">
+            {{ event.title }}
+          </a>
+        </h5>
+        <p class="card-text">{{event.description|truncatewords:20}}</p>
+        <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green">{% translate 'Follow' %} </a>
       </div>
     </div>
     {% endfor %}

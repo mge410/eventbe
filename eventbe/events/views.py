@@ -29,7 +29,7 @@ class EventsListView(django.views.generic.View):
         return django.shortcuts.render(request, self.template_name, context)
 
 
-class EventDetail(django.views.generic.DetailView):
+class EventDetail(django.views.generic.DetailView, django.views.generic.edit.FormMixin):
     model = events.models.Event
     template_name = 'events/event_detail.html'
     pk_url_kwarg = 'id'

@@ -1,8 +1,8 @@
-.events__apply-btn, .events__search-btn, .navbar__menu-btn, .navbar__auth-btn {
+.events__apply-btn, .events__create-btn, .events__search-btn, .navbar__menu-btn, .navbar__auth-btn {
   background: #61E89F;
   border-radius: 28px;
 }
-.events__apply-btn:hover, .events__search-btn:hover, .navbar__menu-btn:hover, .navbar__auth-btn:hover {
+.events__apply-btn:hover, .events__create-btn:hover, .events__search-btn:hover, .navbar__menu-btn:hover, .navbar__auth-btn:hover {
   background: #47af77;
 }
 
@@ -232,6 +232,14 @@ footer {
   border-radius: 15px;
   padding: 0.4rem 2rem 0.4rem 2rem;
 }
+.events__create-btn {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 3rem;
+  color: #000000;
+}
 .events__apply-btn {
   font-family: "Inter";
   font-style: normal;
@@ -264,6 +272,13 @@ footer {
   width: 23rem;
   border-radius: 1rem;
   margin-top: 1rem;
+}
+.event-card__link {
+  color: #000000;
+  text-decoration: none;
+}
+.event-card__link:hover {
+  color: #00c421;
 }
 
 .tag {
