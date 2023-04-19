@@ -11,17 +11,24 @@ class Tag(django.db.models.Model):
     title = django.db.models.CharField(
         _('title'),
         max_length=20,
+        unique=True,
         blank=False,
+        help_text=_('tag title'),
     )
+
     slug = django.db.models.SlugField(
         _('slug'),
         blank=False,
+        unique=True,
         default='000_000',
+        help_text=_('tag slug'),
     )
+
     created_at = django.db.models.DateField(
         _('created at'),
         auto_now_add=True,
     )
+
     is_active = django.db.models.BooleanField(
         _('is active'),
         default=True,
@@ -45,25 +52,30 @@ class Event(django.db.models.Model):
         blank=False,
         help_text=_('Provide a title for your event'),
     )
+
     description = django.db.models.TextField(
         _('description'),
         max_length=300,
         blank=False,
         help_text=_('Describe your event'),
     )
+
     date = django.db.models.DateTimeField(
         _('date & time'),
         blank=False,
         help_text=_('Set date & time for your event'),
     )
+
     location_x = django.db.models.FloatField(
         _('location x'),
         null=True,
     )
+
     location_y = django.db.models.FloatField(
         _('location y'),
         null=True,
     )
+
     status = django.db.models.CharField(
         _('status'),
         default=Status.public,
@@ -71,23 +83,27 @@ class Event(django.db.models.Model):
         max_length=8,
         help_text=_('Set status for your event'),
     )
+
     created_at = django.db.models.DateField(
         _('created at'),
         auto_now_add=True,
     )
+
     is_offline = django.db.models.BooleanField(
         _('is offline'),
         default=False,
-        help_text=_('Click if the event is offline'),
     )
+
     is_active = django.db.models.BooleanField(
         _('is active'),
         default=True,
     )
+
     is_published = django.db.models.BooleanField(
         _('is published'),
         default=True,
     )
+
     is_frozen = django.db.models.BooleanField(
         _('is frozen'),
         default=False,
@@ -119,8 +135,8 @@ class EventThumbnail(core.models.ImageModel):
         return f'uploads/events/{self.event.id}/{name}'
 
     event = django.db.models.OneToOneField(
-        to=Event,
-        verbose_name='main image',
+        Event,
+        verbose_name=_('main image'),
         on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
@@ -154,7 +170,7 @@ class EventGallery(core.models.ImageModel):
         on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
-        verbose_name='gallery images',
+        verbose_name=_('gallery images'),
         help_text=_('gallery images'),
     )
 

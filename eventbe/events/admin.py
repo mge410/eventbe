@@ -50,6 +50,7 @@ class EventAdmin(django.contrib.admin.ModelAdmin):
         events.models.Event.status.field.name,
         events.models.Event.description.field.name,
         events.models.Event.is_published.field.name,
+        events.models.Event.is_offline.field.name,
         events.models.Event.is_frozen.field.name,
         events.models.Event.location_x.field.name,
         events.models.Event.location_y.field.name,

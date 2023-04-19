@@ -27,6 +27,11 @@ class User(
         help_text=_('User Status'),
         max_length=6,
     )
+    email = django.db.models.EmailField(
+        _('email address'),
+        blank=True,
+        unique=True,
+    )
     coins = django.db.models.PositiveIntegerField(
         _('coins'),
         default=0,
