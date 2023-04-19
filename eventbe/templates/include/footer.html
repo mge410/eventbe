@@ -5,55 +5,48 @@
     <div class="row">
       <ul class="col text-left">
         <li class="footer__item">
-          <a class="footer__link" href="{% url 'homepage:home' %}">
-            {% translate 'Home' %}
-          </a>
-        </li>
-        <li class="footer__item">
           <a class="footer__link" href="{% url 'events:events_list' %}">
-            {% translate 'Events' %}
+            {% translate "Events" %}
           </a>
         </li>
+        {% if user.is_authenticated %}
+          <li class="footer__item">
+            <a class="footer__link" href="{% url 'events:create_event' %}">
+              {% translate "Create event" %}
+            </a>
+          </li>
+        {% endif %}
         <li class="footer__item">
           <a class="footer__link" href="{% url 'map:map' %}">
-            {% translate 'Maps' %}
-          </a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="{% url 'about:about' %}">
-            {% translate 'About' %}
+            {% translate "Maps" %}
           </a>
         </li>
       </ul>
 
       <ul class="col text-left">
+        
         <li class="footer__item">
-          <a class="footer__link" href="{% url 'events:create_event' %}">
-            {% translate 'Create event' %}
-          </a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="{% url 'events:events_list' %}">
-            {% translate 'Profile' %}
-          </a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="{% url 'map:map' %}">
-            {% translate 'Maps' %}
+          <a class="footer__link" href="{% url 'homepage:home' %}">
+            {% translate "Home" %}
           </a>
         </li>
         <li class="footer__item">
           <a class="footer__link" href="{% url 'about:about' %}">
-            {% translate 'About' %}
+            {% translate "About" %}
+          </a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="{% url 'feedback:feedback' %}">
+            {% translate "Feedback" %}
           </a>
         </li>
       </ul>
 
       <div class="footer__contacts col-sm-12 col-md-5">
         {% translate 'Our contacts' %}
-        <a href=""> <img src="{% static 'img/telegram_logo.png' %}" alt="" /></a>
-        <a href=""> <img src="{% static 'img/discord_logo.png' %}" alt="" /></a>
-        <a href=""> <img src="{% static 'img/vk_logo.png' %}" alt="" /></a>
+        <a href="https://t.me/reproductionprohibited"> <img src="{% static 'img/telegram_logo.png' %}" alt="" /></a>
+        <a href="https://discord.gg/2eXPKAQG"> <img src="{% static 'img/discord_logo.png' %}" alt="" /></a>
+        <a href="https://vk.com/vvoronkov4"> <img src="{% static 'img/vk_logo.png' %}" alt="" /></a>
       </div>
     </div>
   </div>

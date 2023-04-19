@@ -55,15 +55,6 @@
       <img class="rounded-3" src={{ event.event_image.get_image_300x300.url }} alt="..." />
     </div>
     {% endif %}
-    <hr class="hr">
-    <!--================ Photo Gallery =================-->
-    <div id="imagegallery" class="">
-      {% for photo in event.gallery_images.image %}
-      <img src={{ photo.get_image_300x300.url }} alt="..." class="rounded mx-auto d-block mb-5" />
-      {% empty %}
-      <p class="text-center mb-3">{% translate "There are no additional photos to this event" %}</p>
-      {% endfor %}
-    </div>
     <!--================ Comment List =================-->
     <hr class="hr">
     <div id="comments">
@@ -95,8 +86,8 @@
       </div>
     </form>
     {% else %}
-    <hr class="hr">
-    <p class="text-center text-muted"><i>{% translate "You cannot post comments unless you are authenticated" %}</i></p>
+      <hr class="hr">
+      <p class="text-center text-muted"><i>{% translate "You can post comments only if you are authenticated" %}</i></p>
     {% endif %}
   </div>
 </div>

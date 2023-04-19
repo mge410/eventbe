@@ -11,9 +11,6 @@ class EventManager(django.db.models.Manager):
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
             django.db.models.Prefetch(
-                f'{events.models.Event.gallery_images.rel.related_name}',
-            ),
-            django.db.models.Prefetch(
                 f'{events.models.Event.comments.rel.related_name}',
             ),
         )

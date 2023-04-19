@@ -43,3 +43,8 @@
 
 Схема Базы Данных в проекте  
 ![alt text](database.PNG)
+
+ScreenShots
+![alt text](readme_images/homepage.jpg)
+![alt text](readme_images/events_list.jpg)
+![alt text](readme_images/events_map.jpg)
