@@ -92,56 +92,6 @@ class EventCreateView(django.views.generic.CreateView):
         return django.urls.reverse('events:events_list')
 
 
-class EventUpdateView(django.views.generic.UpdateView):
-    template_name = 'events/update_event.html'
-    model = events.models.Event
-    form_class = events.forms.EventUpdateForm
-    thumbnail_form_class = events.forms.EventThumbnailUpdateForm
-    gallery_form_class = events.forms.EventGalleryUpdateForm
-    pk_url_kwarg = 'id'
-
-    def get_context_data(self, **kwargs) -> dict:
-        event = self.get_object()
-
-        context = super().get_context_data(**kwargs)
-        context['thumbnail_form'] = self.thumbnail_form_class(
-            instance=event.thumbnail,
-        )
-        context['gallery_form'] = self.gallery_form_class(
-            instance=event.gallery,
-        )
-
-    def form_valid(self, form) -> django.http.HttpResponse:
-        form.save()
-        # send mail
-        return super().form_valid(form)
-
-    def post(self, request, *args, **kwargs) -> None:
-        event = self.get_object()
-
-        event_dataform = events.forms.EventUpdateForm(
-            request.POST, instance=event
-        )
-        event_thumbnailform = events.forms.EventThumbnailUpdateForm(
-            request.POST,
-            request.FILES,
-            instance=event.thumbnail,
-        )
-
-        if event_dataform.is_valid() and event_thumbnailform.is_valid():
-            event_dataform.save()
-            event_thumbnailform.save()
-        return django.urls.reverse('events:detail', kwargs={'id': event.id})
-
-    def get_success_url(self, *args, **kwargs) -> str:
-        messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            'The event is successfully updated',
-        )
-        return django.urls.reverse('events:events_list')
-
-
 def get_ajax_all_events(request):
     events_objects = events.models.Event.objects.offline_events()
     response = {'events': [model for model in events_objects]}
