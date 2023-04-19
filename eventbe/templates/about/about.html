@@ -1,0 +1,14 @@
+{% extends 'layouts/layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block content %}
+<div class="text-center ms-3 me-3">
+    <h2>{% translate "About us" %}</h2>
+    <p>
+        {% translate  "Our company was started in 2023 as a startup to help people get together and spend time with other people who have similar interests." %}
+    </p>
+</div>
+{% endblock %}

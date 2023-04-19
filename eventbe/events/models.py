@@ -1,9 +1,6 @@
-import typing as tp
-
 import django.db.models
 import django.utils.html
 from django.utils.translation import ugettext_lazy as _
-import sorl.thumbnail
 
 import core.models
 import events.managers
@@ -119,9 +116,9 @@ class Event(django.db.models.Model):
 
 class EventThumbnail(core.models.ImageModel):
     def saving_path(self, name):
-        return f'uploads/eventthumbnail/{self.events.id}/{name}'
+        return f'uploads/events/{self.event.id}/{name}'
 
-    events = django.db.models.OneToOneField(
+    event = django.db.models.OneToOneField(
         to=Event,
         verbose_name='main image',
         on_delete=django.db.models.CASCADE,
@@ -141,40 +138,35 @@ class EventThumbnail(core.models.ImageModel):
         verbose_name_plural = 'event images'
         default_related_name = 'event_image'
 
-    def get_image_300x300(self) -> tp.Any:
-        return sorl.thumbnail.get_thumbnail(
-            self.image,
-            '300x300',
-            crop='center',
-            quality=51,
-        )
-
-    def image_tmb(self) -> tp.AnyStr:
-        if self.image:
-            return django.utils.html.mark_safe(
-                f'<img src="{self.get_image_300x300().url}">',
-            )
-        return 'No picture'
-
-    image_tmb.short_description = 'image'
-
 
 class EventGallery(core.models.ImageModel):
-    gallery_images = django.db.models.ForeignKey(
-        to=Event,
+    def saving_path(self, name):
+        return f'uploads/gallery_images/{self.event.id}/{name}'
+
+    image = django.db.models.ImageField(
+        'image',
+        upload_to=saving_path,
+        help_text=_('Will be rendered at 300x300 px'),
+    )
+
+    event = django.db.models.ForeignKey(
+        Event,
         on_delete=django.db.models.CASCADE,
-        related_name='event_gallery',
-        default=None,
         null=True,
+        blank=True,
+        verbose_name='gallery images',
+        help_text=_('gallery images'),
     )
 
     class Meta:
         verbose_name = 'Event Gallery Photo'
         verbose_name_plural = 'Event Gallery Photos'
-        default_related_name = 'event_gallery'
+        default_related_name = 'gallery_images'
 
 
 class EventComment(django.db.models.Model):
+    objects = events.managers.EventCommentManager()
+
     author = django.db.models.ForeignKey(
         users.models.User,
         on_delete=django.db.models.CASCADE,

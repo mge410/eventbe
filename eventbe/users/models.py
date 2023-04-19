@@ -47,13 +47,12 @@ class User(
         default=100,
         help_text=_('Distance(km) to search events in'),
     )
-    # desired_event_tags = django.db.models.ManyToManyField(Tag)
 
     objects = users.managers.UserManager()
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
 
 
 class UserAvatar(django.db.models.Model):
@@ -63,6 +62,7 @@ class UserAvatar(django.db.models.Model):
     image = django.db.models.ImageField(
         'image',
         upload_to=saving_path,
+        blank=True,
         help_text='Will be rendered at 300px',
     )
 
@@ -94,6 +94,6 @@ class UserAvatar(django.db.models.Model):
         null=True,
         unique=False,
         blank=True,
-        help_text=_('user profile pic'),
+        help_text=_('user profile picture'),
         related_name='avatar',
     )

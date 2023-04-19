@@ -1,6 +1,7 @@
 import django.db.models
 
 import events.models
+import users.models
 
 
 class EventManager(django.db.models.Manager):
@@ -10,12 +11,11 @@ class EventManager(django.db.models.Manager):
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
             django.db.models.Prefetch(
+                f'{events.models.Event.gallery_images.rel.related_name}',
+            ),
+            django.db.models.Prefetch(
                 f'{events.models.Event.comments.rel.related_name}',
-                queryset=events.models.EventComment.objects.only(
-                    events.models.EventComment.author.field.name,
-                    events.models.EventComment.message.field.name,
-                ),
-            )
+            ),
         )
 
     def prefetch_events(self) -> django.db.models.QuerySet:
@@ -55,5 +55,21 @@ class EventManager(django.db.models.Manager):
                 events.models.Event.is_offline.field.name,
                 events.models.Event.location_x.field.name,
                 events.models.Event.location_y.field.name,
+            )
+        )
+
+
+class EventCommentManager(django.db.models.Manager):
+    def comments_by_event_id(self, id: int) -> django.db.models.QuerySet:
+        return (
+            self.get_queryset()
+            .filter(event__id=id)
+            .select_related(
+                f'{events.models.EventComment.author.field.name}',
+                f'{events.models.EventComment.event.field.name}',
+            )
+            .prefetch_related(
+                f'{events.models.EventComment.author.field.name}__'
+                f'{users.models.User.avatar.related.related_name}',
             )
         )
