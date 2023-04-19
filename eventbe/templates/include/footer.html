@@ -6,19 +6,19 @@
       <ul class="col text-left">
         <li class="footer__item">
           <a class="footer__link" href="{% url 'events:events_list' %}">
-            {% translate 'Events' %}
+            {% translate "Events" %}
           </a>
         </li>
         {% if user.is_authenticated %}
           <li class="footer__item">
             <a class="footer__link" href="{% url 'events:create_event' %}">
-              {% translate 'Create event' %}
+              {% translate "Create event" %}
             </a>
           </li>
         {% endif %}
         <li class="footer__item">
           <a class="footer__link" href="{% url 'map:map' %}">
-            {% translate 'Maps' %}
+            {% translate "Maps" %}
           </a>
         </li>
       </ul>
@@ -27,17 +27,17 @@
         
         <li class="footer__item">
           <a class="footer__link" href="{% url 'homepage:home' %}">
-            {% translate 'Home' %}
+            {% translate "Home" %}
           </a>
         </li>
         <li class="footer__item">
           <a class="footer__link" href="{% url 'about:about' %}">
-            {% translate 'About' %}
+            {% translate "About" %}
           </a>
         </li>
         <li class="footer__item">
           <a class="footer__link" href="{% url 'feedback:feedback' %}">
-            {% translate 'Feedback' %}
+            {% translate "Feedback" %}
           </a>
         </li>
       </ul>

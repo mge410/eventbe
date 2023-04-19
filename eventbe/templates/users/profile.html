@@ -3,14 +3,14 @@
 {% load i18n %}
 
 {% block title %}
-<title>{% translate 'Your profile'%}</title>
+<title>{% translate "Your profile" %}</title>
 {% endblock %}
 
 {% block content %}
 <section class="mb-3">
   <div class="container">
     <h1 class="text-center mt-4 mb-5">
-      {% translate 'Your profile' %}
+      {% translate "Your profile" %}
     </h1>
   </div>
 </section>
@@ -52,7 +52,7 @@
           <!--================ Other Data =================-->
           {% include 'include/form.html' with form=form %}
           <div class="row justify-content-center">
-            <div class="col-md-12"> <input type="submit" class="btn btn-success btn-send" value="{% translate 'Update your profile' %}"> </div>
+            <div class="col-md-12"> <input type="submit" class="btn btn-success btn-send" value="{% translate "Update your profile" %}"> </div>
           </div>
         </div>
       </form>
@@ -61,10 +61,10 @@
       <hr class="border border-secondary border-3 opacity-75">
       <div class="row actions justify-content-center">
         <div class="row-item m-3">
-          <h2 class="mb-1 text-center">{% translate 'Actions' %}</h2>
+          <h2 class="mb-1 text-center">{% translate "Actions" %}</h2>
           <ul class="list-group d-flex flex-column align-items-center">
             <li class="list-group-item text-center w-25"><button class="btn btn-success" type="button" id="download_data">{% translate 'Download Data' %}</button></li>
-            <li class="list-group-item text-center w-25"><a class="btn btn-success" href="{% url 'users:password_change' %}">{% translate 'Change password' %}</a></li>
+            <li class="list-group-item text-center w-25"><a class="btn btn-success" href="{% url 'users:password_change' %}">{% translate "Change password" %}</a></li>
           </ul>
         </div>
       </div>

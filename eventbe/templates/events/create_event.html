@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-<title>{% translate "Create Event " %}</title>
+<title>{% translate "Create Event" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@ type="text/javascript"></script>
 type="text/javascript"></script>
 
 <div class="container text-center">
-  <h2 class="mb-5">{% translate "Create an event " %}</h2>
+  <h2 class="mb-5">{% translate "Create an event" %}</h2>
   {% if messages %}
     <ul class="messages">
     {% for message in messages %}
@@ -48,11 +48,11 @@ type="text/javascript"></script>
             <tbody>
               <tr>
                 <td><label class="font-weight-bold" for="{{  form.location_x.id_for_label }}">
-                  {% translate 'Longitude' %}</label>
+                  {% translate "Longitude" %}</label>
                 </td>
                 <td>
                   <label class="font-weight-bold" for="{{  form.location_y.id_for_label }}">
-                    {% translate 'Latitude' %}</label>
+                    {% translate "Latitude" %}</label>
                 </td>
               </tr>
               <tr>
@@ -70,7 +70,7 @@ type="text/javascript"></script>
 
           {% if field.errors %}
           <div class="text-danger">
-              {% translate 'Form filling errors' %}
+              {% translate "Form filling errors" %}
               {{ field.errors|safe }}
           </div>
           {% endif %}
