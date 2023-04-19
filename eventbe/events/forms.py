@@ -3,7 +3,7 @@ import django.forms
 import events.models
 
 
-class EventCreateUpdateForm(django.forms.ModelForm):
+class EventCreateForm(django.forms.ModelForm):
     class Meta:
         model = events.models.Event
         fields = [
@@ -15,6 +15,52 @@ class EventCreateUpdateForm(django.forms.ModelForm):
             events.models.Event.location_y.field.name,
             events.models.Event.is_offline.field.name,
             events.models.Event.tags.field.name,
+        ]
+
+        def __init__(self, *args, **kwargs) -> None:
+            super().__init__(*args, **kwargs)
+            for field in self.fields.values():
+                field.widget.attrs['class'] = 'form-control'
+
+
+class EventUpdateForm(django.forms.ModelForm):
+    class Meta:
+        model = events.models.Event
+        fields = [
+            events.models.Event.title.field.name,
+            events.models.Event.description.field.name,
+            events.models.Event.date.field.name,
+            events.models.Event.status.field.name,
+            events.models.Event.location_x.field.name,
+            events.models.Event.location_y.field.name,
+            events.models.Event.is_offline.field.name,
+            events.models.Event.tags.field.name,
+        ]
+
+        def __init__(self, *args, **kwargs) -> None:
+            super().__init__(*args, **kwargs)
+            for field in self.fields.values():
+                field.widget.attrs['class'] = 'form-control'
+
+
+class EventThumbnailUpdateForm(django.forms.ModelForm):
+    class Meta:
+        model = events.models.EventThumbnail
+        fields = [
+            events.models.EventThumbnail.image.field.name,
+        ]
+
+        def __init__(self, *args, **kwargs) -> None:
+            super().__init__(*args, **kwargs)
+            for field in self.fields.values():
+                field.widget.attrs['class'] = 'form-control'
+
+
+class EventGalleryUpdateForm(django.forms.ModelForm):
+    class Meta:
+        model = events.models.EventGallery
+        fields = [
+            events.models.EventGallery.image.field.name,
         ]
 
         def __init__(self, *args, **kwargs) -> None:
