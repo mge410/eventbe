@@ -10,12 +10,12 @@
 <section class="mb-3">
   <div class="container">
     {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li class="text-success font-weight-bold text-center display-4 m-4">{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li class="text-success font-weight-bold text-center display-4 m-4">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

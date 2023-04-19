@@ -301,6 +301,11 @@ footer {
         padding: 0.4rem 2rem 0.4rem 2rem;
     }
 
+    &__create-btn {
+        @extend %btn-green;
+        @include eventbe_text_style(2rem, 3rem);
+    }
+
     &__apply-btn {
         @extend %btn-green;
         @include eventbe_text_style(32px, 39px);
@@ -336,7 +341,14 @@ footer {
     border-radius: 1rem;
     margin-top: 1rem;
 
+    &__link {
+        color: #000000;
+        text-decoration: none;
 
+        &:hover {
+            color: #00c421;
+        }
+    }
 }
 
 .tag {

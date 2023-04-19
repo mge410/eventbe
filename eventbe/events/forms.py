@@ -36,7 +36,7 @@ class EventCommentForm(django.forms.ModelForm):
             events.models.EventComment.message.field.name,
         ]
 
-        def __init__(self, *args, **kwargs) -> None:
-            super().__init__(*args, **kwargs)
-            for field in self.fields.values():
-                field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
