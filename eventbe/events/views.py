@@ -1,5 +1,6 @@
 import django.contrib.messages as messages
 import django.core.paginator
+import django.core.serializers
 import django.db.models
 import django.http
 import django.shortcuts
@@ -140,3 +141,9 @@ class EventUpdateView(django.views.generic.UpdateView):
             'The event is successfully updated',
         )
         return django.urls.reverse('events:events_list')
+
+
+def get_ajax_all_events(request):
+    events_objects = events.models.Event.objects.offline_events()
+    response = {'events': [model for model in events_objects]}
+    return django.http.JsonResponse(response)
