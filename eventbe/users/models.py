@@ -51,8 +51,8 @@ class User(
     objects = users.managers.UserManager()
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
 
 
 class UserAvatar(django.db.models.Model):
@@ -94,6 +94,6 @@ class UserAvatar(django.db.models.Model):
         null=True,
         unique=False,
         blank=True,
-        help_text=_('user profile pic'),
+        help_text=_('user profile picture'),
         related_name='avatar',
     )

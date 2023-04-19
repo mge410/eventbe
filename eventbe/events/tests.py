@@ -2,12 +2,12 @@ from http import HTTPStatus
 
 from django.test import Client
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 
 class StaticURLTests(TestCase):
     def test_events_list_endpoint_status(self) -> None:
-        url = reverse('events:events_list')
+        url = reverse_lazy('events:events_list')
 
         response = Client().get(url)
         self.assertEqual(

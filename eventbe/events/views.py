@@ -15,22 +15,14 @@ class EventsListView(django.views.generic.ListView):
     queryset = events.models.Event.objects.events_list()
 
 
-class EventsSortedByDateView(django.views.generic.ListView):
-    template_name = 'events/events_list.html'
+class UserEventListView(django.views.generic.ListView):
+    template_name = 'events/event_list.html'
     context_object_name = 'events'
-    queryset = events.models.Event.objects.events_new_to_old()
+    model = events.models.Event
 
-
-class EventsOnline(django.views.generic.ListView):
-    template_name = 'events/events_list.html'
-    context_object_name = 'events'
-    queryset = events.models.Event.objects.events_online()
-
-
-class EventsOffline(django.views.generic.ListView):
-    template_name = 'events/events_list.html'
-    context_object_name = 'events'
-    queryset = events.models.Event.objects.events_offline()
+    def get_queryset(self, **kwargs) -> dict:
+        user = self.request.user
+        return self.model.objects.filter(event__organizer=user)
 
 
 class EventDetail(
@@ -45,7 +37,12 @@ class EventDetail(
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
-        context.update({'user': self.request.user})
+        context['user'] = self.request.user
+        context[
+            'comments'
+        ] = events.models.EventComment.objects.comments_by_event_id(
+            self.kwargs['id']
+        )
         return context
 
     def get_success_url(self, **kwargs):
@@ -75,7 +72,7 @@ class EventDetail(
 class EventCreateView(django.views.generic.CreateView):
     template_name = 'events/create_event.html'
     model = events.models.Event
-    form_class = events.forms.EventCreateUpdateForm
+    form_class = events.forms.EventCreateForm
 
     def form_valid(self, form):
         creator = self.request.user
@@ -96,11 +93,42 @@ class EventCreateView(django.views.generic.CreateView):
 class EventUpdateView(django.views.generic.UpdateView):
     template_name = 'events/update_event.html'
     model = events.models.Event
-    form_class = events.forms.EventCreateUpdateForm
+    form_class = events.forms.EventUpdateForm
+    thumbnail_form_class = events.forms.EventThumbnailUpdateForm
+    gallery_form_class = events.forms.EventGalleryUpdateForm
+    pk_url_kwarg = 'id'
 
-    def form_valid(self, form):
+    def get_context_data(self, **kwargs) -> dict:
+        event = self.get_object()
+
+        context = super().get_context_data(**kwargs)
+        context['thumbnail_form'] = self.thumbnail_form_class(
+            instance=event.thumbnail,
+        )
+        context['gallery_form'] = self.gallery_form_class(
+            instance=event.gallery,
+        )
+
+    def form_valid(self, form) -> django.http.HttpResponse:
         form.save()
         return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs) -> None:
+        event = self.get_object()
+
+        event_dataform = events.forms.EventUpdateForm(
+            request.POST, instance=event
+        )
+        event_thumbnailform = events.forms.EventThumbnailUpdateForm(
+            request.POST,
+            request.FILES,
+            instance=event.thumbnail,
+        )
+
+        if event_dataform.is_valid() and event_thumbnailform.is_valid():
+            event_dataform.save()
+            event_thumbnailform.save()
+        return django.urls.reverse('events:detail', kwargs={'id': event.id})
 
     def get_success_url(self, *args, **kwargs) -> str:
         messages.add_message(

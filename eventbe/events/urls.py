@@ -12,12 +12,12 @@ urlpatterns = [
         name='create_event',
     ),
     path(
-        'update/',
+        'update/<int:id>/',
         login_required(events.views.EventUpdateView.as_view()),
         name='update_event',
     ),
     path(
-        '<int:id>',
+        '<int:id>/',
         events.views.EventDetail.as_view(),
         name='detail',
     ),
