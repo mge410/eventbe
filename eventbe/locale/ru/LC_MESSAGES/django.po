@@ -167,3 +167,15 @@ msgstr "Регистрация"
 
 msgid "Register an account"
 msgstr "Создать аккаунт"
+
+msgid "Learn more"
+msgstr "Узнать больше"
+
+msgid "We help people with similar interests gather in the right atmosphere"
+msgstr "Мы помогаем людям с похожими интересами встретиться в правильной обстановке"
+
+msgid "Place of"
+msgstr "Место"
+
+msgid "interesting events"
+msgstr "интересных событий"
