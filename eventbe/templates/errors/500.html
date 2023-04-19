@@ -1,0 +1,17 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center vh-100">
+  <div class="text-center">
+    <h1 class="display-1 fw-bold">500</h1>
+    <p class="fs-3"> <span class="text-danger">Opps!</span></p>
+    <p class="lead">
+      Internal Server Error
+    </p>
+    <a href="{% url 'homepage:home' %}" class="btn btn-primary">Go Home</a>
+  </div>
+</div>
+<!--================ Start Blog Post Area =================-->
+{% endblock %}
