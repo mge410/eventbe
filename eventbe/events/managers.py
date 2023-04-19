@@ -6,7 +6,7 @@ import users.models
 
 class EventManager(django.db.models.Manager):
     def events_list(self) -> django.db.models.QuerySet:
-        return self.prefetch_events()
+        return self.prefetch_events().filter(is_published=True)
 
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
@@ -16,11 +16,6 @@ class EventManager(django.db.models.Manager):
             django.db.models.Prefetch(
                 f'{events.models.Event.comments.rel.related_name}',
             ),
-        )
-
-    def events_by_user_id(self, id: int) -> django.db.models.QuerySet:
-        return self.prefetch_events().filter(
-            organizer__id=id,
         )
 
     def prefetch_events(self) -> django.db.models.QuerySet:
