@@ -15,10 +15,6 @@
         <br>
         {{ event.description }}
       </p>
-      <!--================ Registration for the event =================-->
-      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">{% translate "Follow" %}</button>
-      </div>
     </div>
     <!--================ Thumbnail =================-->
     {% if event.event_image.image %}
@@ -26,11 +22,6 @@
         <img class="rounded-3" src={{ event.event_image.get_image_300x300.url }} alt="..."/>
       </div>
     {% endif %}
-    <!--================ #TODO Photo Gallery =================-->
-    <!-- <hr class="hr"> -->
-    <div id="imagegallery" class="">
-      
-    </div>
     <!--================ Comment List =================-->
     <hr class="hr">
     <div id="comments">
