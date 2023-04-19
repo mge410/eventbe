@@ -1,21 +1,15 @@
-from datetime import timedelta
-
 from django.conf import settings
-from django.contrib import messages
-from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
-from django.utils import timezone
 import django.views
-import users.tokens
-import users.services
 
 import users.forms
 import users.models
+import users.services
+import users.tokens
 
 
 class Register(django.views.View):
@@ -36,9 +30,7 @@ class Register(django.views.View):
             avatar.full_clean()
             avatar.save()
             if not settings.DEFAULT_USER_ACTIVITY:
-                users.services.activation_email(
-                    self.request, user
-                )
+                users.services.activation_email(self.request, user)
 
             return redirect('homepage:home')
         context = {'form': form}
@@ -67,7 +59,9 @@ class ActivateUsers(django.views.generic.View):
             )
             user.save()
         else:
-            django.contrib.messages.error(request, 'The activation link is invalid.')
+            django.contrib.messages.error(
+                request, 'The activation link is invalid.'
+            )
         return render(request, self.template_name, context={})
 
 

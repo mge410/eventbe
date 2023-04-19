@@ -1,4 +1,3 @@
-
 import django.conf
 import django.contrib.auth.models
 import django.contrib.auth.tokens
@@ -17,9 +16,7 @@ def activation_email(
     request: django.http.HttpRequest,
     user: users.models.User,
 ) -> None:
-    token = django.contrib.auth.tokens.default_token_generator.make_token(
-        user
-    )
+    token = django.contrib.auth.tokens.default_token_generator.make_token(user)
     message = django.template.loader.render_to_string(
         'users/activate_user.html',
         {
