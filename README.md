@@ -28,6 +28,16 @@
 
 ---
 
+**Настройка проекта**  
+В репозитории есть пример файла с настройками проекта __example_config.env__
+копируем его файл с названием .env внутри проекта в папку eventbe   
+__Для Windows__   
+```cp example_config.env .\eventbe\.env```   
+__Для linux__   
+```cp -r example_config.env /eventbe/.env```   
+После чего его можно настроить под себя
+
+
 ***Установка зависимостей***  
 ```cd requirements```  
 
@@ -44,7 +54,7 @@
 Схема Базы Данных в проекте  
 ![alt text](database.PNG)
 
-ScreenShots
+**ScreenShots**
 ![alt text](readme_images/homepage.jpg)
 ![alt text](readme_images/events_list.jpg)
 ![alt text](readme_images/events_map.jpg)
