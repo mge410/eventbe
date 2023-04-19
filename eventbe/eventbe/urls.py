@@ -22,6 +22,11 @@ urlpatterns = [
     django.urls.path('feedback/', django.urls.include(feedback.urls)),
 ]
 
+handler404 = 'core.views.custom_page_not_found_view'
+handler500 = 'core.views.custom_error_view'
+handler403 = 'core.views.custom_permission_denied_view'
+handler400 = 'core.views.custom_bad_request_view'
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,
