@@ -5,7 +5,7 @@ from typing import List
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, True),
+    DEBUG=(bool, False),
     SECRET_KEY=(str, 'secret_key'),
     ALLOWED_HOSTS=(list, ['*']),
     DEFAULT_USER_ACTIVITY=(bool, True),
