@@ -12,14 +12,9 @@ urlpatterns = [
         name='register',
     ),
     django.urls.path(
-        'activate/<str:name>/',
+        'activate/<uidb64>/<token>/',
         users.views.ActivateUsers.as_view(),
         name='activate',
-    ),
-    django.urls.path(
-        'recovery/<str:name>/',
-        users.views.UserRecovery.as_view(),
-        name='recovery',
     ),
     django.urls.path(
         'profile/',
