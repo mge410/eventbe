@@ -56,10 +56,10 @@ class EventThumbnailUpdateForm(django.forms.ModelForm):
             events.models.EventThumbnail.image.field.name,
         ]
 
-        def __init__(self, *args, **kwargs) -> None:
-            super().__init__(*args, **kwargs)
-            for field in self.fields.values():
-                field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
 
 
 class EventGalleryUpdateForm(django.forms.ModelForm):
@@ -69,10 +69,10 @@ class EventGalleryUpdateForm(django.forms.ModelForm):
             events.models.EventGallery.image.field.name,
         ]
 
-        def __init__(self, *args, **kwargs) -> None:
-            super().__init__(*args, **kwargs)
-            for field in self.fields.values():
-                field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
 
 
 class EventCommentForm(django.forms.ModelForm):
@@ -82,7 +82,7 @@ class EventCommentForm(django.forms.ModelForm):
             events.models.EventComment.message.field.name,
         ]
 
-        def __init__(self, *args, **kwargs) -> None:
-            super().__init__(*args, **kwargs)
-            for field in self.fields.values():
-                field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

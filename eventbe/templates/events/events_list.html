@@ -1,45 +1,49 @@
 {% extends 'layouts/layout.html' %}
-{% load static %}
-{% load i18n %} 
+{% load static %} {% load i18n %}
 {% block content %}
 
 <div class="events mx-auto col-9">
   <div class="events__search mx-auto col-12 row">
     <form action="" method="get">
       <div class="row">
-      {% for field in filter.form %}
+        {% for field in filter.form %}
         <div class="col-md-3 m-4">
-          <div class="form-group"> <label class="d-block" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+          <div class="form-group">
+            <label class="d-block" for="{{ field.id_for_label }}">
+              {{ field.label }}</label>
+            {{ field }}
             {% for error in field.errors %}
-              <div class="help-block with-errors text-danger">{{ error|safe }}</div>
+            <div class="help-block with-errors text-danger">
+              {{ error|safe }}
+            </div>
             {% endfor %}
           </div>
         </div>
-      {% endfor %}
+        {% endfor %}
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-around">
         <button class="btn events__search-btn d-block col-6" type="submit">
           {% translate 'Search' %}
         </button>
+        <a class="btn events__create-btn d-block col-3" type="submit" href="{% url 'events:create_event' %}">
+          {% translate 'Create event' %}
+        </a>
       </div>
     </form>
   </div>
-  <div
-    class="events__events-list d-flex flex-wrap justify-content-around col-12"
-  >
+  <div class="events__events-list d-flex flex-wrap justify-content-around col-12">
     {% for event in page_obj.object_list %}
     <div class="card event-card">
-      <img
-        class="card-img-top"
+      <img class="card-img-top"
         src="{% if event.event_image.get_image_300x300.url %} {{event.event_image.get_image_300x300.url}} {% else %} {% static 'img/users/avatars-default.jpg' %} {% endif %} "
-        alt="Card image cap"
-      />
+        alt="Card image cap" />
       <div class="card-body">
-        <h5 class="card-title">{{ event.title }}</h5>
-        <p class="card-text">
-          {{event.description}}
-        </p>
-        <a href="#" class="btn btn-green">{% translate 'Follow' %} </a>
+        <h5 class="card-title"><a class="event-card__link" href="{% url 'events:detail' id=event.id %}">
+            {{ event.title }}
+          </a>
+        </h5>
+        <p class="card-text">{{event.description|truncatewords:20}}</p>
+        <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green">{% translate 'Follow' %} </a>
       </div>
     </div>
     {% endfor %}
@@ -49,17 +53,31 @@
   <nav class="col-12 events__pagination-nav d-flex justify-content-center" aria-label="Page navigation example">
     <ul class="pagination">
       {% if page_obj.has_other_pages %}
-      <li class="page-item"><a class="page-link" href="{% url 'events:events_list' %}?page={{page_obj.has_other_pages}}">{% translate "Previous" %}</a></li>
+      <li class="page-item">
+        <a class="page-link"
+          href="{% url 'events:events_list' %}?page={{page_obj.has_other_pages}}">{% translate "Previous" %}</a>
+      </li>
       {% endif %}
-      <li class="page-item"><a class="page-link" href="{% url 'events:events_list' %}?page=1">1</a></li>
-      <li class="page-item"><a class="page-link" href="{% url 'events:events_list' %}?page={{page_obj.number}}" disabled>{{page_obj.number}}</a></li>
-      <li class="page-item"><a class="page-link" href="{% url 'events:events_list' %}?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}}</a></li>
+      <li class="page-item">
+        <a class="page-link" href="{% url 'events:events_list' %}?page=1">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="{% url 'events:events_list' %}?page={{page_obj.number}}"
+          disabled>{{page_obj.number}}</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link"
+          href="{% url 'events:events_list' %}?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}}</a>
+      </li>
       {% if page_obj.has_next %}
-      <li class="page-item"><a class="page-link" href="{% url 'events:events_list' %}?page={{page_obj.next_page_number}}">{% translate "Next" %}</a></li>
+      <li class="page-item">
+        <a class="page-link"
+          href="{% url 'events:events_list' %}?page={{page_obj.next_page_number}}">{% translate "Next" %}</a>
+      </li>
       {% endif %}
     </ul>
   </nav>
-  {% endif %}
 
+  {% endif %}
 </div>
 {% endblock content %}
