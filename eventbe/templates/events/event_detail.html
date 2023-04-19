@@ -38,7 +38,7 @@
     <!--================ Comment List =================-->
     <hr class="hr">
     <div id="comments">
-      {% for comment in event.comments.all %}
+      {% for comment in comments %}
         <div class="card mb-4">
           <div class="card-body">
             <p>{{ comment.message }}</p>
