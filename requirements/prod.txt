@@ -1,11 +1,11 @@
 asgiref==3.6.0
-Django==3.2.17
 django-cleanup==7.0.0
 django-debug-toolbar==4.0.0
 django-environ==0.10.0
 django-filter==23.1
+django==3.2.17
 environ==1.0
-Pillow==9.5.0
+pillow==9.5.0
 pytz==2023.3
 sorl-thumbnail==12.9.0
 sqlparse==0.4.3

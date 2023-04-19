@@ -14,6 +14,8 @@ import users.managers
 class User(
     django.contrib.auth.models.AbstractUser,
 ):
+    objects = users.managers.UserManager()
+
     class Status(django.db.models.TextChoices):
         unauthorized = 'unauth', 'unauthorized'
         authorized = 'auth', 'authorized'
@@ -52,8 +54,6 @@ class User(
         default=100,
         help_text=_('Distance(km) to search events in'),
     )
-
-    objects = users.managers.UserManager()
 
     class Meta:
         verbose_name = 'user'
@@ -95,6 +95,7 @@ class UserAvatar(django.db.models.Model):
 
     user = django.db.models.OneToOneField(
         User,
+        verbose_name='User',
         on_delete=django.db.models.CASCADE,
         null=True,
         unique=False,
