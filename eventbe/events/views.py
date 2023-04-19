@@ -1,5 +1,6 @@
 import django.contrib.messages as messages
 import django.core.paginator
+import django.core.serializers
 import django.db.models
 import django.http
 import django.shortcuts
@@ -28,11 +29,8 @@ class EventsListView(django.views.generic.View):
         return django.shortcuts.render(request, self.template_name, context)
 
 
-class EventDetail(
-    django.views.generic.edit.FormMixin, django.views.generic.DetailView
-):
+class EventDetail(django.views.generic.DetailView):
     model = events.models.Event
-    form_model = events.models.EventComment
     template_name = 'events/event_detail.html'
     pk_url_kwarg = 'id'
     context_object_name = 'event'
@@ -82,6 +80,7 @@ class EventCreateView(django.views.generic.CreateView):
         event = form.save(commit=False)
         event.organizer = creator
         event.save()
+        # send mail
         return super().form_valid(form)
 
     def get_success_url(self, *args, **kwargs) -> str:
@@ -114,6 +113,7 @@ class EventUpdateView(django.views.generic.UpdateView):
 
     def form_valid(self, form) -> django.http.HttpResponse:
         form.save()
+        # send mail
         return super().form_valid(form)
 
     def post(self, request, *args, **kwargs) -> None:
@@ -140,3 +140,9 @@ class EventUpdateView(django.views.generic.UpdateView):
             'The event is successfully updated',
         )
         return django.urls.reverse('events:events_list')
+
+
+def get_ajax_all_events(request):
+    events_objects = events.models.Event.objects.offline_events()
+    response = {'events': [model for model in events_objects]}
+    return django.http.JsonResponse(response)
