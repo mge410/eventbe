@@ -16,6 +16,7 @@ class EventCreateForm(django.forms.ModelForm):
             events.models.Event.is_offline.field.name,
             events.models.Event.tags.field.name,
         ]
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -53,19 +54,6 @@ class EventThumbnailUpdateForm(django.forms.ModelForm):
         model = events.models.EventThumbnail
         fields = [
             events.models.EventThumbnail.image.field.name,
-        ]
-
-        def __init__(self, *args, **kwargs) -> None:
-            super().__init__(*args, **kwargs)
-            for field in self.fields.values():
-                field.widget.attrs['class'] = 'form-control'
-
-
-class EventGalleryUpdateForm(django.forms.ModelForm):
-    class Meta:
-        model = events.models.EventGallery
-        fields = [
-            events.models.EventGallery.image.field.name,
         ]
 
         def __init__(self, *args, **kwargs) -> None:

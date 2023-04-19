@@ -24,6 +24,6 @@ urlpatterns = [
     path(
         '<int:id>/',
         events.views.EventDetail.as_view(),
-        name='detail',        
+        name='detail',
     ),
 ]
