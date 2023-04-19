@@ -54,7 +54,7 @@ class Event(django.db.models.Model):
     date = django.db.models.DateTimeField(
         _('date & time'),
         blank=False,
-        help_text=_('Set date & time for your event'),
+        help_text=_('format: yyyy-mm-dd hh:mm'),
     )
 
     description = django.db.models.TextField(
