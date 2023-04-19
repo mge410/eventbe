@@ -15,12 +15,14 @@
     <title>{{ title }}</title>
   </head>
   <body>
-    {% include 'include/header.html' %}
-    <main class="main">
-      {% block content %}
-      <h3 class="text-center">{% translate "Content didn't load "%} =(</h3>
-      {% endblock %}
-    </main>
-    {% include 'include/footer.html' %}
+    <div class="body-wrapper">
+      {% include 'include/header.html' %}
+      <main class="main">
+        {% block content %}
+        <h3 class="text-center">{% translate "Content didn't load "%} =(</h3>
+        {% endblock %}
+      </main>
+      {% include 'include/footer.html' %}
+    </div>
   </body>
 </html>

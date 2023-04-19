@@ -120,11 +120,11 @@ class EventThumbnail(core.models.ImageModel):
 
     event = django.db.models.OneToOneField(
         to=Event,
-        verbose_name='event',
+        verbose_name='main image',
         on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
-        help_text='event',
+        help_text='main image',
     )
 
     image = django.db.models.ImageField(
@@ -145,7 +145,7 @@ class EventGallery(core.models.ImageModel):
 
     image = django.db.models.ImageField(
         'image',
-        upload_to='saving path',
+        upload_to=saving_path,
         help_text=_('Will be rendered at 300x300 px'),
     )
 
@@ -154,7 +154,7 @@ class EventGallery(core.models.ImageModel):
         on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
-        verbose_name='gallery_images',
+        verbose_name='gallery images',
         help_text=_('gallery images'),
     )
 
@@ -165,6 +165,8 @@ class EventGallery(core.models.ImageModel):
 
 
 class EventComment(django.db.models.Model):
+    objects = events.managers.EventCommentManager()
+
     author = django.db.models.ForeignKey(
         users.models.User,
         on_delete=django.db.models.CASCADE,
