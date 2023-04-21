@@ -13,14 +13,20 @@ import users.urls
 
 urlpatterns = [
     django.urls.path('', django.urls.include(home.urls)),
-    django.urls.path('events/', django.urls.include(events.urls)),
     django.urls.path('about/', django.urls.include(about.urls)),
-    django.urls.path('map/', django.urls.include(map.urls)),
     django.urls.path('admin/', django.contrib.admin.site.urls),
+    django.urls.path('events/', django.urls.include(events.urls)),
+    django.urls.path('feedback/', django.urls.include(feedback.urls)),
+    django.urls.path('map/', django.urls.include(map.urls)),
     django.urls.path('auth/', django.urls.include(users.urls)),
     django.urls.path('auth/', django.urls.include(django.contrib.auth.urls)),
-    django.urls.path('feedback/', django.urls.include(feedback.urls)),
+    django.urls.path('tinymce/', django.urls.include('tinymce.urls')),
 ]
+
+handler404 = 'core.views.custom_page_not_found_view'
+handler500 = 'core.views.custom_error_view'
+handler403 = 'core.views.custom_permission_denied_view'
+handler400 = 'core.views.custom_bad_request_view'
 
 if settings.DEBUG:
     urlpatterns += static(
