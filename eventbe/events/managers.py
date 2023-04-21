@@ -11,9 +11,6 @@ class EventManager(django.db.models.Manager):
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
             django.db.models.Prefetch(
-                f'{events.models.Event.gallery_images.rel.related_name}',
-            ),
-            django.db.models.Prefetch(
                 f'{events.models.Event.comments.rel.related_name}',
             ),
         )
@@ -49,7 +46,6 @@ class EventManager(django.db.models.Manager):
             self.get_queryset()
             .filter(is_published=True, is_offline=True, is_active=True)
             .values(
-                events.models.Event.id.field.name,
                 events.models.Event.title.field.name,
                 events.models.Event.description.field.name,
                 events.models.Event.date.field.name,
