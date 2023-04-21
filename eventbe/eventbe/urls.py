@@ -18,7 +18,6 @@ urlpatterns = [
     django.urls.path('events/', django.urls.include(events.urls)),
     django.urls.path('feedback/', django.urls.include(feedback.urls)),
     django.urls.path('map/', django.urls.include(map.urls)),
-
     django.urls.path('auth/', django.urls.include(users.urls)),
     django.urls.path('auth/', django.urls.include(django.contrib.auth.urls)),
     django.urls.path('tinymce/', django.urls.include('tinymce.urls')),
