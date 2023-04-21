@@ -1,24 +1,18 @@
-from datetime import timedelta
-
 from django.conf import settings
-from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.utils import timezone
-from django.views import View
+import django.views
 
 import users.forms
 import users.models
+import users.services
+import users.tokens
 
 
-class Register(View):
+class Register(django.views.View):
     template_name = 'users/signup.html'
 
     def get(self, request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
@@ -36,53 +30,42 @@ class Register(View):
             avatar.full_clean()
             avatar.save()
             if not settings.DEFAULT_USER_ACTIVITY:
-                absolute_url = self.request.build_absolute_uri(
-                    reverse_lazy(
-                        'users:activate',
-                        args=[user.username],
-                    )
-                )
-                send_mail(
-                    'Email verification',
-                    f'Thank you for registering on our website! <br>'
-                    f'Profile activation link! <br>'
-                    f'- « {absolute_url}',
-                    settings.MAIL_SENDER,
-                    [f'{form.cleaned_data["email"]}'],
-                    fail_silently=False,
-                )
+                users.services.activation_email(self.request, user)
 
             return redirect('homepage:home')
         context = {'form': form}
         return render(request, self.template_name, context)
 
 
-class ActivateUsers(View):
+class ActivateUsers(django.views.generic.View):
     template_name = 'users/activate.html'
 
-    def get(self, request: HttpRequest, name: str) -> HttpResponse:
-        context = {}
-
-        user = get_object_or_404(get_user_model(), username=name)
-        if (
-            user.date_joined < timezone.now() - timedelta(hours=12)
-            and not user.is_active
-        ):
-            user.delete()
-            messages.error(request, 'Overdue =(')
-        elif user.is_active is False:
-            user.is_active = True
-            user.save()
-            messages.success(
-                request, 'Your account has been successfully activated'
+    def get(
+        self, request: django.http.HttpRequest, uidb64: str, token: str
+    ) -> django.http.HttpResponsePermanentRedirect:
+        try:
+            user = users.models.User.objects.get(
+                pk=django.utils.encoding.force_str(
+                    django.utils.http.urlsafe_base64_decode(uidb64)
+                )
             )
+        except Exception:
+            user = None
+        if user and users.tokens.token_7_days.check_token(user, token):
+            user.is_active = True
+            django.contrib.messages.success(
+                request,
+                'Your account has been successfully activated',
+            )
+            user.save()
         else:
-            messages.success(request, 'This user is already activated')
+            django.contrib.messages.error(
+                request, 'The activation link is invalid.'
+            )
+        return render(request, self.template_name, context={})
 
-        return render(request, self.template_name, context)
 
-
-class UsersProfile(View):
+class UsersProfile(django.views.View):
     template_name = 'users/profile.html'
 
     def get(self, request: HttpRequest) -> HttpResponse:
@@ -120,29 +103,3 @@ class UsersProfile(View):
             'user': user,
         }
         return render(request, self.template_name, context)
-
-
-class UserRecovery(View):
-    template_name = 'users/recovery.html'
-
-    def get(self, request: HttpRequest, name: str) -> HttpResponse:
-        user = get_object_or_404(get_user_model(), username=name)
-        if (
-            user.profile.account_blocking_date is not None
-            and user.profile.account_blocking_date
-            > timezone.now() + timedelta(days=7)
-            and not user.is_active
-        ):
-            user.delete()
-            messages.error(request, 'User deleted')
-        elif user.is_active is False:
-            user.is_active = True
-            user.profile.login_failed_count = 0
-            user.profile.account_blocking_date = None
-            user.profile.save()
-            user.save()
-            messages.success(request, 'Account restored!')
-        else:
-            messages.success(request, 'Account does not require recovery')
-
-        return render(request, self.template_name)

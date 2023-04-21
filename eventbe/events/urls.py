@@ -17,13 +17,8 @@ urlpatterns = [
         name='ajax_offline_events',
     ),
     path(
-        'update/<int:id>/',
-        login_required(events.views.EventUpdateView.as_view()),
-        name='update_event',
-    ),
-    path(
         '<int:id>/',
         events.views.EventDetail.as_view(),
-        name='detail',        
+        name='detail',
     ),
 ]

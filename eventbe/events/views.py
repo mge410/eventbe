@@ -29,7 +29,9 @@ class EventsListView(django.views.generic.View):
         return django.shortcuts.render(request, self.template_name, context)
 
 
-class EventDetail(django.views.generic.DetailView):
+class EventDetail(
+    django.views.generic.DetailView, django.views.generic.edit.FormMixin
+):
     model = events.models.Event
     template_name = 'events/event_detail.html'
     pk_url_kwarg = 'id'
@@ -88,56 +90,6 @@ class EventCreateView(django.views.generic.CreateView):
             self.request,
             messages.SUCCESS,
             'The event is successfully created',
-        )
-        return django.urls.reverse('events:events_list')
-
-
-class EventUpdateView(django.views.generic.UpdateView):
-    template_name = 'events/update_event.html'
-    model = events.models.Event
-    form_class = events.forms.EventUpdateForm
-    thumbnail_form_class = events.forms.EventThumbnailUpdateForm
-    gallery_form_class = events.forms.EventGalleryUpdateForm
-    pk_url_kwarg = 'id'
-
-    def get_context_data(self, **kwargs) -> dict:
-        event = self.get_object()
-
-        context = super().get_context_data(**kwargs)
-        context['thumbnail_form'] = self.thumbnail_form_class(
-            instance=event.thumbnail,
-        )
-        context['gallery_form'] = self.gallery_form_class(
-            instance=event.gallery,
-        )
-
-    def form_valid(self, form) -> django.http.HttpResponse:
-        form.save()
-        # send mail
-        return super().form_valid(form)
-
-    def post(self, request, *args, **kwargs) -> None:
-        event = self.get_object()
-
-        event_dataform = events.forms.EventUpdateForm(
-            request.POST, instance=event
-        )
-        event_thumbnailform = events.forms.EventThumbnailUpdateForm(
-            request.POST,
-            request.FILES,
-            instance=event.thumbnail,
-        )
-
-        if event_dataform.is_valid() and event_thumbnailform.is_valid():
-            event_dataform.save()
-            event_thumbnailform.save()
-        return django.urls.reverse('events:detail', kwargs={'id': event.id})
-
-    def get_success_url(self, *args, **kwargs) -> str:
-        messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            'The event is successfully updated',
         )
         return django.urls.reverse('events:events_list')
 
