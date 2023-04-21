@@ -33,12 +33,7 @@ function create_placemarks(ya_map, events) {
       coords,
       {
         hintContent: event_model.title,
-        balloonContent:
-          "<a href='/events/" +
-          event_model.id +
-          "'>" +
-          event_model.title +
-          "</a>",
+        balloonContent: event_model.description,
       },
       {
         iconLayout: "default#image",
