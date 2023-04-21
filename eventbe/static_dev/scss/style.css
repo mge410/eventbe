@@ -280,6 +280,14 @@ footer {
 .event-card__link:hover {
   color: #00c421;
 }
+.event-card__description {
+  display: block;
+  max-height: 7rem;
+  overflow: hidden;
+}
+.event-card__btn {
+  margin-bottom: 0%;
+}
 
 .tag {
   font-family: "Inter";

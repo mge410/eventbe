@@ -6,7 +6,12 @@ function init() {
     {
       center: [55.76, 37.64],
       zoom: 10,
-      controls: ['zoomControl', 'searchControl', 'typeSelector',  'fullscreenControl'],
+      controls: [
+        "zoomControl",
+        "searchControl",
+        "typeSelector",
+        "fullscreenControl",
+      ],
     },
     {
       searchControlProvider: "yandex#search",
@@ -17,8 +22,13 @@ function init() {
   var input_x = document.getElementById("id_location_x");
   var input_y = document.getElementById("id_location_y");
 
-  var coords = [input_y.innerHTML.trim(), input_x.innerHTML.trim()];
- 
+  var coords = [
+    input_y.innerHTML.trim().replace(",", "."),
+    input_x.innerHTML.trim().replace(",", "."),
+  ];
+
+  console.log(coords);
+
   myPlacemark = new ymaps.Placemark(
     coords,
     {},

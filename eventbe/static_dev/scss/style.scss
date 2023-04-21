@@ -349,6 +349,16 @@ footer {
             color: #00c421;
         }
     }
+
+    &__description {
+        display: block;
+        max-height: 7rem;
+        overflow: hidden;
+    }
+
+    &__btn {
+        margin-bottom: 0%;
+    }
 }
 
 .tag {
