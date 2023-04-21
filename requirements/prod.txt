@@ -10,5 +10,4 @@ pillow==9.5.0
 pytz==2023.3
 sorl-thumbnail==12.9.0
 sqlparse==0.4.3
-tinymce=
 tzdata==2023.3
