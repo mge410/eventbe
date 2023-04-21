@@ -20,6 +20,7 @@ urlpatterns = [
     django.urls.path('map/', django.urls.include(map.urls)),
     django.urls.path('auth/', django.urls.include(users.urls)),
     django.urls.path('auth/', django.urls.include(django.contrib.auth.urls)),
+    django.urls.path('tinymce/', django.urls.include('tinymce.urls')),
 ]
 
 handler404 = 'core.views.custom_page_not_found_view'

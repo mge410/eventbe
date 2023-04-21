@@ -1,10 +1,19 @@
+from django.core.exceptions import ValidationError
 import django.db.models
 import django.utils.html
 from django.utils.translation import ugettext_lazy as _
+from tinymce.models import HTMLField
 
 import core.models
 import events.managers
 import users.models
+
+
+def validate_image_size(image):
+    file_size = image.file.size
+    limit_mb = 8
+    if file_size > limit_mb * 1024 * 1024:
+        raise ValidationError(f'Max size of file is {limit_mb} MB')
 
 
 class Tag(django.db.models.Model):
@@ -35,7 +44,7 @@ class Tag(django.db.models.Model):
     )
 
     def __str__(self) -> str:
-        return self.title[:20]
+        return self.title[:15]
 
 
 class Event(django.db.models.Model):
@@ -57,7 +66,7 @@ class Event(django.db.models.Model):
         help_text=_('format: yyyy-mm-dd hh:mm'),
     )
 
-    description = django.db.models.TextField(
+    description = HTMLField(
         _('description'),
         max_length=300,
         blank=False,
@@ -177,6 +186,7 @@ class EventGallery(core.models.ImageModel):
         'image',
         upload_to=saving_path,
         help_text=_('Will be rendered at 300x300 px'),
+        validators=[validate_image_size],
     )
 
     class Meta:
@@ -201,7 +211,8 @@ class EventThumbnail(core.models.ImageModel):
     image = django.db.models.ImageField(
         'image',
         upload_to=saving_path,
-        help_text='Will be rendered at 300px',
+        help_text=_('Will be rendered at 300x300 px'),
+        validators=[validate_image_size],
     )
 
     class Meta:
