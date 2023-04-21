@@ -5,7 +5,7 @@ from typing import List
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, True),
+    DEBUG=(bool, False),
     SECRET_KEY=(str, 'secret_key'),
     ALLOWED_HOSTS=(list, ['*']),
     DEFAULT_USER_ACTIVITY=(bool, True),
@@ -26,9 +26,6 @@ MAIL_SENDER = env('MAIL_SENDER')
 ALLOWED_HOSTS: List[str] = env('ALLOWED_HOSTS')
 INTERNAL_IPS = ['127.0.0.1']
 
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,12 +33,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Third party
+    # Third-party
     'debug_toolbar',
     'sorl.thumbnail',
     'django_cleanup.apps.CleanupConfig',
     'django_filters',
-    # Ours
+    # Eventbe
     'about.apps.AboutConfig',
     'core.apps.CoreConfig',
     'events.apps.EventsConfig',
@@ -54,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -82,18 +80,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'eventbe.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -114,10 +106,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+LANGUAGES = (
+    ('en', ('English',)),
+    ('ru', ('Russian',)),
+)
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale/')]
 
 TIME_ZONE = 'UTC'
 

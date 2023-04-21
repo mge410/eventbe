@@ -1,0 +1,184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-28 21:11+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "About us"
+msgstr "О нас"
+
+msgid "Our company was started in 2023 as a startup to help people get together and spend time with other people who have similar interests."
+msgstr "Наша компания была основана 2023 как стартап для того, чтобы помочь людям организовывать встречи и проводить время с людьми с похожими интересами."
+
+msgid "We help people gather in the right atmosphere"
+msgstr "Мы помогаем людям собраться в нужной атмосфере"
+
+msgid "Create Event"
+msgstr "Создать событие"
+
+msgid "Create an event"
+msgstr "Создать событие"
+
+msgid "Create"
+msgstr "Создать"
+
+msgid "Form filling errors"
+msgstr "Ошибки заполнения полей"
+
+msgid "Longitude"
+msgstr "Долгота"
+
+msgid "Latitude"
+msgstr "Широта"
+
+msgid "Follow"
+msgstr "Отслеживать"
+
+msgid "No comments here yet... Be the first one to comment!"
+msgstr "Пока что комментариев нет... Будьте первым, кто прокомментирует!"
+
+msgid "You can post comments only if you are authenticated"
+msgstr "Вы можете писать комментарии только если вы авторизованы"
+
+msgid "Post"
+msgstr "Опубликовать"
+
+msgid "Search"
+msgstr "Искать"
+
+msgid "Previous"
+msgstr "Пред."
+
+msgid "Next"
+msgstr "След."
+
+msgid "Feedback"
+msgstr "Обратная связь"
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "You will find something to your liking for sure"
+msgstr "Вы точно найдете здесь что-то по душе"
+
+msgid "To events"
+msgstr "К событиям"
+
+msgid "Events"
+msgstr "События"
+
+msgid "Create event"
+msgstr "Создать событие"
+
+msgid "Maps"
+msgstr "Карты"
+
+msgid "Home"
+msgstr "На домашнюю"
+
+msgid "About"
+msgstr "О нас"
+
+msgid "Authorization"
+msgstr "Авторизация"
+
+msgid "Logout"
+msgstr "Выйти"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Content didn't load"
+msgstr "Содержимое не удалось загрузить"
+
+msgid "Profile activation"
+msgstr "Активация профиля"
+
+msgid "Login"
+msgstr "Войти"
+
+msgid "Forgot your password"
+msgstr "Забыли пароль"
+
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+msgid "You are logged out!"
+msgstr "Вы вышли из аккаунта!"
+
+msgid "You have successfully changed your password"
+msgstr "Вы успешно изменили свой пароль"
+
+msgid "Password change"
+msgstr "Смена пароля"
+
+msgid "Сhange password"
+msgstr "Изменить пароль"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Your password has been set. You may go ahead and log in now"
+msgstr "Ваш пароль был обновлен. Вы теперь можете войти в свой аккаунт"
+
+msgid "Password recovery"
+msgstr "Восстановление пароля"
+
+msgid "Confirm password reset"
+msgstr "Подтвердите сброс пароля"
+
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+msgid "We have emailed you instructions for setting your password, if an account exists with the email you entered. If you don't receive an email, please make sure you've entered the correct email, and check your spam folder."
+msgstr "Мы отправили Вам на почту инструкцию по установке пароля, если существует аккаунт с указанной почтой. Если вы не получили письмо, убедитесь что вы указали правильную почту, и проверьте папку спам."
+
+msgid "Send us your email address to change your password"
+msgstr "Впишите адрес вашей электронной почты чтобы сменить пароль"
+
+msgid "Change password"
+msgstr "Сменить пароль"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Update profile"
+msgstr "Обновить профиль"
+
+msgid "Your profile"
+msgstr "Ваш профиль"
+
+msgid "Account activation"
+msgstr "Активация аккаунта"
+
+msgid "Registration"
+msgstr "Регистрация"
+
+msgid "Register an account"
+msgstr "Создать аккаунт"
+
+msgid "Learn more"
+msgstr "Узнать больше"
+
+msgid "We help people with similar interests gather in the right atmosphere"
+msgstr "Мы помогаем людям с похожими интересами встретиться в правильной обстановке"
+
+msgid "Place of"
+msgstr "Место"
+
+msgid "interesting events"
+msgstr "интересных событий"
