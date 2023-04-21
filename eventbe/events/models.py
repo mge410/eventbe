@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 import django.db.models
 import django.utils.html
 from django.utils.translation import ugettext_lazy as _
+from tinymce.models import HTMLField
 
 import core.models
 import events.managers
@@ -65,7 +66,7 @@ class Event(django.db.models.Model):
         help_text=_('format: yyyy-mm-dd hh:mm'),
     )
 
-    description = django.db.models.TextField(
+    description = HTMLField(
         _('description'),
         max_length=300,
         blank=False,
