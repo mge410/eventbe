@@ -5,7 +5,6 @@ import events.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('events', '0013_auto_20230419_2301'),
     ]
@@ -14,11 +13,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='eventgallery',
             name='image',
-            field=models.ImageField(help_text='Will be rendered at 300x300 px', upload_to=events.models.EventGallery.saving_path, validators=[events.models.validate_image_size], verbose_name='image'),
+            field=models.ImageField(
+                help_text='Will be rendered at 300x300 px',
+                upload_to=events.models.EventGallery.saving_path,
+                validators=[events.models.validate_image_size],
+                verbose_name='image',
+            ),
         ),
         migrations.AlterField(
             model_name='eventthumbnail',
             name='image',
-            field=models.ImageField(help_text='Will be rendered at 300x300 px', upload_to=events.models.EventThumbnail.saving_path, validators=[events.models.validate_image_size], verbose_name='image'),
+            field=models.ImageField(
+                help_text='Will be rendered at 300x300 px',
+                upload_to=events.models.EventThumbnail.saving_path,
+                validators=[events.models.validate_image_size],
+                verbose_name='image',
+            ),
         ),
     ]
