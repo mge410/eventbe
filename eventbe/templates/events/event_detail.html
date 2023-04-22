@@ -11,174 +11,187 @@
 
   <div class="row align-items-center rounded-3 border shadow-lg">
     <div class="col-12 p-3 p-lg-5 pt-lg-3">
-      <div class="d-flex align-items-center">
-        <div class="row">
-        <div class="d-inline col-6">
-          <!--================ To Update =================-->
-          {% if event.organizer.id == user.id %}
+      <div class="">
+        <div class="row col-12">
+          <div class="d-inline col-6">
+            <!--================ To Update =================-->
+            {% if event.organizer.id == user.id %}
             <a href="{% url 'events:update' id=event.id %}">
               <img src="{% static 'img/gear.png' %}" width="50" height="50" style="opacity: 0.5;">
             </a>
-          {% endif %}
-          <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
-          <div class="row">
-          {% if user.is_authenticated %}
-            {% if event.organizer.id != user.id %}
-              <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block" type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate 'Don\'t take part' %}{% endif %}</button></form>
-            {% endif %}          </div>
-            {% endif %}          </div>
-          <!--================ Tags =================-->
-          {% if messages %}
-          <ul class="messages">
-            {% for message in messages %}
-            <li class="text-success font-weight-bold text-center display-6 m-4">{{ message }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-          <p>{{ event.tags.all|join:' | ' }}</p>
-          <h3 class="display-9">{{ event.date }}</h3>
+            {% endif %}
+            <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
+            <div class="row">
 
-          <table class="table table-bordered text-center">
-            <tbody>
-              <tr>
-                <td>{% translate "Weather" %}</td>
-                <td>{% translate "Temperature, °C" %}</td>
-                <td>{% translate "Pressure, Pa" %}</td>
-                <td>{% translate "Humidity, %" %}</td>
-              </tr>
-              <tr>
-                <td id="id_weather"></td>
-                <td id="id_temp"></td>
-                <td id="id_pressure"></td>
-                <td id="id_humidity"></td>
-              </tr>
-            </tbody>
-          </table>
+              {% if user.is_authenticated %}
+              {% if event.organizer.id != user.id %}
+              <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input
+                  name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block"
+                  type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate "Don\'t take part" %}{% endif %}</button>
+              </form>
+              {% endif %}
+
+              {% endif %}
+            </div>
+            <!--================ Tags =================-->
+            {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+              <li class="text-success font-weight-bold text-center display-6 m-4">{{ message }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            <p>{{ event.tags.all|join:' | ' }}</p>
+            <h3 class="display-9">{{ event.date }}</h3>
+            <!--================ Weather =================-->
+            <table class="table table-bordered text-center">
+              <tbody>
+                <tr>
+                  <td>{% translate "Weather" %}</td>
+                  <td>{% translate "Temperature, °C" %}</td>
+                  <td>{% translate "Pressure, Pa" %}</td>
+                  <td>{% translate "Humidity, %" %}</td>
+                </tr>
+                <tr>
+                  <td id="id_weather"></td>
+                  <td id="id_temp"></td>
+                  <td id="id_pressure"></td>
+                  <td id="id_humidity"></td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!--================ Thumbnail =================-->
+          {% if event.event_image.image %}
+          <div class=" col-sm-12 col-md-4 mr-auto overflow-hidden">
+            <img class="rounded-3"
+              src="{% if event.event_image.get_image_300x300.url %} {{event.event_image.get_image_300x300.url}} {% else %} {% static 'img/users/avatars-default.jpg' %} {% endif %}"
+              alt="..." />
+          </div>
+          {% endif %}
         </div>
-        <!--================ Thumbnail =================-->
-        {% if event.event_image.image %}
-        <div class="d-inline col-sm-12 col-md-4 overflow-hidden">
-          <img class="rounded-3" src="{% if event.event_image.get_image_300x300.url %} {{event.event_image.get_image_300x300.url}} {% else %} {% static 'img/users/avatars-default.jpg' %} {% endif %}" alt="..." />
-        </div>
-        {% endif %}
+        <hr class="hr">
+
+        <!--================ Description =================-->
+        <p class="lead col-12">
+          <br>
+          {{ event.description|safe }}
+        </p>
+
       </div>
       <hr class="hr">
+      <!--================ Map =================-->
+      {% if event.is_offline %}
 
-      <!--================ Description =================-->
-      <p class="lead">
-        <br>
-        {{ event.description|safe }}
-      </p>
+      {% if LANGUAGE_CODE|lower|slice:2 == "ru" %}
+      <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=ru_RU"
+        type="text/javascript"></script>
+      {% else %}
+      <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=en_RU"
+        type="text/javascript"></script>
+      {% endif %}
 
-    </div>
-    <hr class="hr">
-    <!--================ Map =================-->
-    {% if event.is_offline %}
-
-    {% if LANGUAGE_CODE|lower|slice:2 == "ru" %}
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=ru_RU"
-      type="text/javascript"></script>
-    {% else %}
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=en_RU"
-      type="text/javascript"></script>
-    {% endif %}
-
-    <script src="{% static 'js/ya_map_detail_event.js' %}" type="text/javascript"></script>
-    <div class="col-10  mx-auto">
-      <div id="map" class="map-detail col-12"></div>
-      <table class="table text-center" id="location_table">
-        <tbody>
-          <tr>
-            <td><label class="font-weight-bold" for="id_location_x">
-                {% translate 'Longitude' %}</label></td>
-            <td>
-              <label class="font-weight-bold" for="id_location_y">
-                {% translate 'Latitude' %}</label>
-            </td>
-          </tr>
-          <tr>
-            <td id="id_location_x">
-              {{ event.location_x }}
-            </td>
-            <td id="id_location_y">
-              {{ event.location_y }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="container m-3">
-      <h2 class="text-center">{% translate "Members" %}</h2>
-      <table class="table m-3">
-        <thead>
-          <tr>
-            <th scope="col">{% translate 'Nickname'%}</th>
-            <th scope="col">{% translate 'Full name'%}</th>
-            <th scope="col">{% translate 'Email'%}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for user in event.members.all %}
-          <tr>
-            <th scope="row">{{user.username}}</th>
-            <td>{{user.first_name}} {{ user.last_name }}</td>
-            <td>{{user.email}}</td>
-          </tr>
-          {% empty %}
-          <tr>
-            <th scope="row">{% translate 'You are most likely'%}</th>
-            <td>{% translate 'the first person'%}</td>
-            <td>{% translate 'to come here.'%}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <!--================ Comment List =================-->
-    <hr class="hr">
-    <div id="comments">
-      {% for comment in comments %}
-      <div class="card mb-4">
-        <div class="card-body">
-          <p>{{ comment.message }}</p>
-          <div class="d-flex justify-content-between">
-            <div class="d-flex flex-row align-items-center">
-              {% if comment.author.avatar.image %}
-                <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" width="40" height="40">
-              {% endif %}
-              <p class="small mb-0 ms-2">{{ comment.author.username }}</p>
+      <script src="{% static 'js/ya_map_detail_event.js' %}" type="text/javascript"></script>
+      <div class="col-10  mx-auto">
+        <div id="map" class="map-detail col-12"></div>
+        <table class="table text-center" id="location_table">
+          <tbody>
+            <tr>
+              <td><label class="font-weight-bold" for="id_location_x">
+                  {% translate 'Longitude' %}</label></td>
+              <td>
+                <label class="font-weight-bold" for="id_location_y">
+                  {% translate 'Latitude' %}</label>
+              </td>
+            </tr>
+            <tr>
+              <td id="id_location_x">
+                {{ event.location_x }}
+              </td>
+              <td id="id_location_y">
+                {{ event.location_y }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container m-3">
+        <h2 class="text-center">{% translate "Members" %}</h2>
+        <table class="table m-3">
+          <thead>
+            <tr>
+              <th scope="col">{% translate 'Nickname'%}</th>
+              <th scope="col">{% translate 'Full name'%}</th>
+              <th scope="col">{% translate 'Email'%}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in event.members.all %}
+            <tr>
+              <th scope="row">{{user.username}}</th>
+              <td>{{user.first_name}} {{ user.last_name }}</td>
+              <td>{{user.email}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <th scope="row">{% translate 'You are most likely'%}</th>
+              <td>{% translate 'the first person'%}</td>
+              <td>{% translate 'to come here.'%}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+      <!--================ Comment List =================-->
+      <hr class="hr">
+      <div id="comments">
+        {% for comment in comments %}
+        <div class="card mb-4">
+          <div class="card-body">
+            <p>{{ comment.message }}</p>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-row align-items-center">
+                {% if comment.author.avatar.image %}
+                <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" width="40"
+                  height="40">
+                {% endif %}
+                <p class="small mb-0 ms-2">{{ comment.author.username }}</p>
+              </div>
             </div>
           </div>
         </div>
+        {% empty %}
+        <p class="text-center mb-3">{% translate "No comments here yet... Be the first one to comment!" %}</p>
+        {% endfor %}
       </div>
-      {% empty %}
-      <p class="text-center mb-3">{% translate "No comments here yet... Be the first one to comment!" %}</p>
-      {% endfor %}
-    </div>
-    <!--================ Comment Form =================-->
-    {% if user.is_authenticated %}
-    <form class="basic-form" method="post" enctype="multipart/form-data">
-      {% include 'include/form.html' %}
-      <div class="row justify-content-center text-center">
-        <div class="col-md-12">
-          <input type="submit" class="btn btn-outline-success btn-send" value="{% translate 'Post' %}">
+      <!--================ Comment Form =================-->
+      {% if user.is_authenticated %}
+      <form class="basic-form" method="post" enctype="multipart/form-data">
+        {% include 'include/form.html' %}
+        <div class="row justify-content-center text-center">
+          <div class="col-md-12">
+            <input type="submit" class="btn btn-outline-success btn-send" value="{% translate 'Post' %}">
+          </div>
         </div>
-      </div>
-    </form>
-    {% else %}
-    <hr class="hr">
-    <p class="text-center text-muted"><i>{% translate "You cannot post comments unless you are authenticated" %}</i></p>
-    {% endif %}
-    <!--================ Delete Event Button =================-->
-    {% if user.id == event.organizer.id %}
+      </form>
+      {% else %}
+      <hr class="hr">
+      <p class="text-center text-muted"><i>{% translate "You cannot post comments unless you are authenticated" %}</i>
+      </p>
+      {% endif %}
+      <!--================ Delete Event Button =================-->
+      {% if user.id == event.organizer.id %}
       <form method="post">
         {% csrf_token %}
         <div class="col-md-12 text-center mt-5 mb-1">
           <hr class="hr">
-          <input type="submit" name="delete_event" class="btn btn-outline-danger" value="{% translate 'Delete Event' %}">
+          <input type="submit" name="delete_event" class="btn btn-outline-danger"
+            value="{% translate 'Delete Event' %}">
         </div>
       </form>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
