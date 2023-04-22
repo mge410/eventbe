@@ -54,6 +54,7 @@ class EventThumbnailForm(django.forms.ModelForm):
         model = events.models.EventThumbnail
         fields = [
             events.models.EventThumbnail.image.field.name,
+        ]
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
