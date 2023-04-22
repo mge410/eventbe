@@ -24,9 +24,6 @@
           <div class="card" style="width: 18rem;">
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                Current status: <i><b>{{ user.get_status_display }}</i></b>
-              </li>
-              <li class="list-group-item">
                 Coins earned: <i><b>{{ user.coins }}</b></i>
               </li>
               <li class="list-group-item">
@@ -64,6 +61,8 @@
           <div class="row-item m-3">
             <h2 class="mb-1 text-center">{% translate 'Actions' %}</h2>
             <ul class="list-group d-flex flex-column align-items-center">
+              <li class="list-group-item text-center w-25"><a class="btn btn-success"
+                href="{% url 'download:download_data' %}">{% translate 'Download User Stats' %}</a></li>
               <li class="list-group-item text-center w-25"><a class="btn btn-success"
                 href="{% url 'events:user_events' %}">{% translate 'My events' %}</a></li>
               <li class="list-group-item text-center w-25"><a class="btn btn-success"
