@@ -4,12 +4,23 @@
 
 {% block content %}
 <div class="container my-5">
+
   <div class="row align-items-center rounded-3 border shadow-lg">
     <div class="col-12 p-3 p-lg-5 pt-lg-3">
       <div class="row">
         <div class="d-inline col-6">
           <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
+          <div class="row">
+            <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block" type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate 'Don\'t take part' %}{% endif %}</button></form>
+          </div>
           <!--================ Tags =================-->
+          {% if messages %}
+          <ul class="messages">
+          {% for message in messages %}
+            <li class="text-success font-weight-bold text-center display-6 m-4">{{ message }}</li>
+          {% endfor %}
+          </ul>
+          {% endif %}
           <p>{{ event.tags.all|join:'   ' }}</p>
           <h3 class="display-9">{{ event.date }}</h3>
         </div>
@@ -21,6 +32,7 @@
         {% endif %}
       </div>
       <hr class="hr">
+      
       <!--================ Description =================-->
       <p class="lead">
         <br>
@@ -75,6 +87,37 @@
       </table>
     </div>
     {% endif %}
+
+
+    <div class="container m-3">
+    <h2 class="text-center">{% translate "Members" %}</h2>
+      <table class="table m-3">
+        <thead>
+          <tr>
+            <th scope="col">{% translate 'Nickname'%}</th>
+            <th scope="col">{% translate 'Full name'%}</th>
+            <th scope="col">{% translate 'Email'%}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in event.members.all %}
+          <tr>
+            <th scope="row">{{user.username}}</th>
+            <td>{{user.first_name}} {{ user.last_name }}</td>
+            <td>{{user.email}}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <th scope="row">{% translate 'You are most likely'%}</th>
+            <td>{% translate 'the first person'%}</td>
+            <td>{% translate 'to come here.'%}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
 
     <!--================ Comment List =================-->
     <hr class="hr">

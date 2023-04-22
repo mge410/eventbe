@@ -126,8 +126,16 @@ class Event(django.db.models.Model):
 
     tags = django.db.models.ManyToManyField(
         to=Tag,
+        verbose_name=_('tags'),
         related_name='tags',
         help_text=_('Select appropriate tags for your event'),
+    )
+
+    members = django.db.models.ManyToManyField(
+        to=users.models.User,
+        verbose_name=_('members'),
+        related_name='users',
+        help_text=_('Users who subscribed to the event'),
     )
 
     class Meta:

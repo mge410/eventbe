@@ -10,6 +10,7 @@ import django.views.generic
 import events.filters
 import events.forms
 import events.models
+import users.models
 
 
 class EventsListView(django.views.generic.View):
@@ -27,6 +28,24 @@ class EventsListView(django.views.generic.View):
         )
         context['page_obj'] = paginator.get_page(request.GET.get('page', 1))
         return django.shortcuts.render(request, self.template_name, context)
+
+    def get_success_url(self, **kwargs):
+        return django.urls.reverse_lazy(
+            'events:detail',
+            kwargs={'id': kwargs['id']},
+        )
+
+    def post(self, request: django.http.HttpRequest, *args, **kwargs):
+        event = events.models.Event.objects.get(id=request.POST['event_id'])
+        if request.user in event.members.all():
+            event.members.remove(request.user)
+            messages.success(
+                self.request, 'You are no longer a participant of the event!'
+            )
+        else:
+            event.members.add(request.user)
+            messages.success(self.request, 'You are an event participant!')
+        return django.shortcuts.redirect(self.get_success_url(**{'id': 1}))
 
 
 class EventDetail(
@@ -46,6 +65,7 @@ class EventDetail(
         ] = events.models.EventComment.objects.comments_by_event_id(
             self.kwargs['id']
         )
+        context['users'] = users.models.User.objects.all()
         return context
 
     def get_success_url(self, **kwargs):

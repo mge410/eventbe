@@ -17,6 +17,11 @@ urlpatterns = [
         name='ajax_offline_events',
     ),
     path(
+        'add_members/',
+        login_required(events.views.EventsListView.as_view()),
+        name='add_members',
+    ),
+    path(
         '<int:id>/',
         events.views.EventDetail.as_view(),
         name='detail',
