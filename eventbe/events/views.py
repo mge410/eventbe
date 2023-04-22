@@ -86,12 +86,30 @@ class EventCreateView(django.views.generic.CreateView):
     template_name = 'events/create_event.html'
     model = events.models.Event
     form_class = events.forms.EventForm
+    second_form_class = events.forms.EventThumbnailForm
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context['thumbnail_form'] = self.second_form_class()
+        if self.request.POST:
+            context['thumbnail_form'] = self.second_form_class(
+                self.request.POST, self.request.FILES
+            )
+        else:
+            context['thumbnail_form'] = self.second_form_class()
+        return context
 
     def form_valid(self, form):
+        print(self.request.FILES)
+        context = self.get_context_data()
         creator = self.request.user
         event = form.save(commit=False)
         event.organizer = creator
         event.save()
+        thumbnail_form = context['thumbnail_form']
+        event_image = thumbnail_form.save(commit=False)
+        event_image.event = event
+        event_image.save()
         # send mail
         return super().form_valid(form)
 
@@ -108,7 +126,6 @@ class EventUpdateView(django.views.generic.UpdateView):
     template_name = 'events/update_event.html'
     model = events.models.Event
     form_class = events.forms.EventForm
-    second_form_class = events.forms.EventThumbnailForm
     pk_url_kwarg = 'id'
     context_object_name = 'event'
 
@@ -118,24 +135,11 @@ class EventUpdateView(django.views.generic.UpdateView):
             kwargs={'id': self.get_object().id},
         )
 
-    def get_context_data(self, **kwargs) -> dict:
-        context = super().get_context_data(**kwargs)
-        context['thumbnail_form'] = self.second_form_class(
-            instance=self.get_object().event_image
-        )
-        return context
-
-    def post(self, request, *args, **kwargs) -> django.http.HttpResponse:
-        form = self.form_class(request.POST)
-        thumbnail_form = self.second_form_class(request.POST, request)
-        if form.is_valid() and thumbnail_form.is_valid():
-            print('IS VALID')
-            event = form.save(commit=False)
-            thumbnail = thumbnail_form.save(commit=False)
-            event.event_image = thumbnail
-            event.save()
-            thumbnail.save()
-        return django.shortcuts.redirect(self.get_success_url(**self.kwargs))
+    def form_valid(self, form) -> django.http.HttpResponse:
+        event = form.save(commit=False)
+        event.is_published = False
+        event.save()
+        return super().form_valid(form)
 
 
 class EventsUserList(django.views.generic.View):

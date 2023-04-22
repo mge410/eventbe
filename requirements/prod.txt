@@ -8,6 +8,7 @@ django-tinymce==3.6.1
 environ==1.0
 pillow==9.5.0
 pytz==2023.3
+reportlab==3.6.12
 sorl-thumbnail==12.9.0
 sqlparse==0.4.3
 tzdata==2023.3

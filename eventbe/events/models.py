@@ -95,7 +95,7 @@ class Event(django.db.models.Model):
 
     is_published = django.db.models.BooleanField(
         _('is published'),
-        default=True,
+        default=False,
     )
 
     location_x = django.db.models.FloatField(

@@ -1,4 +1,5 @@
 import django.db.models
+from django.db.models import Q
 
 import events.models
 import users.models
@@ -6,7 +7,10 @@ import users.models
 
 class EventManager(django.db.models.Manager):
     def events_list(self) -> django.db.models.QuerySet:
-        return self.prefetch_events().filter(is_published=True)
+        return self.prefetch_events().filter(
+            ~Q(status=events.models.Event.Status.private),
+            is_published=True,
+        )
 
     def events_detail(self) -> django.db.models.QuerySet:
         return self.prefetch_events().prefetch_related(
@@ -23,6 +27,7 @@ class EventManager(django.db.models.Manager):
     def prefetch_events(self) -> django.db.models.QuerySet:
         return (
             self.get_queryset()
+            .filter(is_published=True)
             .select_related(
                 f'{events.models.Event.event_image.related.related_name}',
             )
