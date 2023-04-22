@@ -45,6 +45,8 @@ class EventsListView(django.views.generic.View):
         if request.user in event.members.all():
             event.members.remove(request.user)
             event.organizer.coins -= 10
+            user.events_organized -= 1
+            user.events_visited -= 1
             user.coins -= 10
             messages.success(
                 self.request, 'You are no longer a participant of the event!'
@@ -52,6 +54,8 @@ class EventsListView(django.views.generic.View):
         else:
             event.members.add(request.user)
             event.organizer.coins += 10
+            user.events_organized += 1
+            user.events_visited += 1
             user.coins += 10
             messages.success(self.request, 'You are an event participant!')
         user.save()
