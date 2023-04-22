@@ -1,11 +1,15 @@
 import django.contrib.messages as messages
+import django.core.mail
 import django.core.paginator
 import django.core.serializers
 import django.db.models
 import django.http
+from django.http import HttpResponseRedirect
 import django.shortcuts
 import django.urls
+from django.urls import reverse_lazy
 import django.views.generic
+from django.views.generic import FormView
 
 import events.filters
 import events.forms
@@ -36,15 +40,26 @@ class EventsListView(django.views.generic.View):
         )
 
     def post(self, request: django.http.HttpRequest, *args, **kwargs):
+        user = users.models.User.objects.get(id=request.user.id)
         event = events.models.Event.objects.get(id=request.POST['event_id'])
         if request.user in event.members.all():
             event.members.remove(request.user)
+            event.organizer.coins -= 10
+            user.events_organized -= 1
+            user.events_visited -= 1
+            user.coins -= 10
             messages.success(
                 self.request, 'You are no longer a participant of the event!'
             )
         else:
             event.members.add(request.user)
+            event.organizer.coins += 10
+            user.events_organized += 1
+            user.events_visited += 1
+            user.coins += 10
             messages.success(self.request, 'You are an event participant!')
+        user.save()
+        event.organizer.save()
         return django.shortcuts.redirect(self.get_success_url(**{'id': 1}))
 
 
@@ -112,6 +127,17 @@ class EventCreateView(django.views.generic.CreateView):
             'The event is successfully created',
         )
         return django.urls.reverse('events:events_list')
+
+
+class TagCreateView(FormView):
+    form_class = events.forms.AddTags
+    template_name = 'events/add_tags.html'
+    success_url = reverse_lazy('events:create_tags')
+
+    def form_valid(self, form: events.forms.AddTags) -> HttpResponseRedirect:
+        form.save()
+        messages.success(self.request, 'Thanks for the application')
+        return super().form_valid(form)
 
 
 def get_ajax_all_events(request):

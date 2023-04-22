@@ -33,11 +33,20 @@ msgstr "Создать событие"
 msgid "Create an event"
 msgstr "Создать событие"
 
+msgid "Create tag"
+msgstr "Создать тэг"
+
+msgid "On our project, you can create events for users according to their interests. For registering at your event, you will receive coins, which you can later exchange on your profile page. Users for participation are also credited with coins, the number of which can also be seen in the profile. If you have ideas to improve our functionality, please send us feedback via email. Events and tags are moderated. Therefore, when you create your event, it will not immediately appear in the list of events. We care about the safety of our users, so everything goes through the moderators."
+msgstr "На нашем проекте вы можете создавать мероприятия для пользователей по их интересам. За регистрацию на вашем мероприятии вы получите монеты, которые в дальнейшем сможете обменять на странице своего профиля. Пользователям за участие также начисляются монеты, количество которых также можно увидеть в профиле. Если у вас есть идеи по улучшению нашей функциональности, пожалуйста, оставьте нам отзыв по электронной почте. События и теги модерируются. Поэтому, когда вы создадите свое событие, оно не сразу появится в списке событий. Мы заботимся о безопасности наших пользователей, поэтому все проходит через модераторов."
+
 msgid "Learn more"
 msgstr "Узнать больше"
 
 msgid "Members"
 msgstr "Участники"
+
+msgid "Leave a request to add a tag. After moderation, we will send you an information letter."
+msgstr "Оставьте заявку на добавление тега. После модерации мы отправим вам информационное письмо."
 
 msgid "Create"
 msgstr "Создать"

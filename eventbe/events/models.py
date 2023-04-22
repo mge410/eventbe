@@ -27,12 +27,9 @@ class Tag(django.db.models.Model):
         default=True,
     )
 
-    slug = django.db.models.SlugField(
-        _('slug'),
-        blank=False,
-        unique=True,
-        default='000_000',
-        help_text=_('tag slug'),
+    is_verified = django.db.models.BooleanField(
+        _('is verified'),
+        default=False,
     )
 
     title = django.db.models.CharField(

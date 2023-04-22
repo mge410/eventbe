@@ -21,6 +21,13 @@
             {% translate "Maps" %}
           </a>
         </li>
+        {% if user.is_authenticated %}
+          <li class="footer__item">
+            <a class="footer__link" href="{% url 'events:create_event' %}">
+              {% translate "Create tag" %}
+            </a>
+          </li>
+        {% endif %}
       </ul>
 
       <ul class="col text-left">
