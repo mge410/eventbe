@@ -5,6 +5,7 @@ import django.contrib.auth.urls
 import django.urls
 
 import about.urls
+import download.urls
 import events.urls
 import feedback.urls
 import home.urls
@@ -15,6 +16,7 @@ urlpatterns = [
     django.urls.path('', django.urls.include(home.urls)),
     django.urls.path('about/', django.urls.include(about.urls)),
     django.urls.path('admin/', django.contrib.admin.site.urls),
+    django.urls.path('download/', django.urls.include(download.urls)),
     django.urls.path('events/', django.urls.include(events.urls)),
     django.urls.path('feedback/', django.urls.include(feedback.urls)),
     django.urls.path('map/', django.urls.include(map.urls)),

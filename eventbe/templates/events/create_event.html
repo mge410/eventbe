@@ -25,7 +25,7 @@
 
   <script type="text/javascript"></script>
 
-  <form method="post">
+  <form method="post" enctype='multipart/form-data'>
     {% csrf_token %}
     <ul class="list-group list-group-flush col-8 mx-auto">
       {% with "location_x location_y" as hide_inputs %}
@@ -82,7 +82,7 @@
       {% endfor %}
       {% endwith %}
     </ul>
-
+    {% include 'include/form.html' with form=thumbnail_form %}
     <input type="submit" value={% translate "Create" %} class="btn btn-secondary">
   </form>
   {% endif %}

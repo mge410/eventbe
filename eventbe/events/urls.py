@@ -27,6 +27,16 @@ urlpatterns = [
         name='detail',
     ),
     path(
+        'my_events/',
+        events.views.EventsUserList.as_view(),
+        name='user_events',
+    ),
+    path(
+        'update/<int:id>',
+        events.views.EventUpdateView.as_view(),
+        name='update',
+    ),
+    path(
         'create_tags/',
         events.views.TagCreateView.as_view(),
         name='create_tags',

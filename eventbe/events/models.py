@@ -64,10 +64,8 @@ class Event(django.db.models.Model):
     )
 
     description = HTMLField(
-        _('description'),
-        max_length=300,
-        blank=False,
-        help_text=_('Describe your event'),
+        'description',
+        help_text='Describe your event',
     )
 
     title = django.db.models.CharField(
@@ -94,7 +92,7 @@ class Event(django.db.models.Model):
 
     is_published = django.db.models.BooleanField(
         _('is published'),
-        default=True,
+        default=False,
     )
 
     location_x = django.db.models.FloatField(

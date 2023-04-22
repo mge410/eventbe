@@ -103,7 +103,7 @@ msgid "Maps"
 msgstr "Карты"
 
 msgid "Home"
-msgstr "На домашнюю"
+msgstr "Домашняя"
 
 msgid "About"
 msgstr "О нас"
