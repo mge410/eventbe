@@ -26,4 +26,9 @@ urlpatterns = [
         events.views.EventDetail.as_view(),
         name='detail',
     ),
+    path(
+        'create_tags/',
+        events.views.TagCreateView.as_view(),
+        name='create_tags',
+    ),
 ]

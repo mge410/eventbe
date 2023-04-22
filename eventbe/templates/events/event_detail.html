@@ -15,11 +15,11 @@
         <div class="d-inline col-6">
           <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
           <div class="row">
-            <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input
-                name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block"
-                type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate "Don\'t take part" %}{% endif %}</button>
-            </form>
-          </div>
+          {% if user.is_authenticated %}
+            {% if event.organizer.id != user.id %}
+              <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block" type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate 'Don\'t take part' %}{% endif %}</button></form>
+            {% endif %}          </div>
+            {% endif %}          </div>
           <!--================ Tags =================-->
           {% if messages %}
           <ul class="messages">

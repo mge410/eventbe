@@ -1,0 +1,28 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% translate "Tag request" %}
+{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+  <h2 class="mb-5 mt-1">{% translate "Tag request" %}</h2>
+    <div class="tab-content mb-5 display-5">
+        {% translate "Leave a request to add a tag. After moderation, we will send you an information letter." %}
+    </div>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <form method="post">
+    {% include 'include/form.html' %}
+    <input type="submit" value={% translate "Send" %} class="btn btn-secondary">
+  </form>
+  {% endif %}
+</div>
+{% endblock %}
