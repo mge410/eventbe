@@ -3,7 +3,7 @@ import django.forms
 import events.models
 
 
-class EventCreateForm(django.forms.ModelForm):
+class EventForm(django.forms.ModelForm):
     class Meta:
         model = events.models.Event
         fields = [
@@ -34,6 +34,19 @@ class EventCommentForm(django.forms.ModelForm):
         model = events.models.EventComment
         fields = [
             events.models.EventComment.message.field.name,
+        ]
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class EventThumbnailForm(django.forms.ModelForm):
+    class Meta:
+        model = events.models.EventThumbnail
+        fields = [
+            events.models.EventThumbnail.image.field.name,
         ]
 
     def __init__(self, *args, **kwargs) -> None:

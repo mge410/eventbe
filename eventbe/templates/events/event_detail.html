@@ -6,14 +6,23 @@
 <div class="container my-5">
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
     <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-      <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
+      <div class="d-flex align-items-center">
+        <!--================ Title =================-->
+        <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
+        <!--================ To Update =================-->
+        {% if event.organizer.id == user.id %}
+          <a href="{% url 'events:update' id=event.id %}">
+            <img src="{% static 'img/gear.png' %}" width="50" height="50" style="opacity: 0.5;">
+          </a>
+        {% endif %}
+      </div>
       <!--================ Tags =================-->
       <p>{{ event.tags.all|join:'   ' }}</p>
       <h3 class="display-9">{{ event.date }}</h3>
       <!--================ Description =================-->
       <p class="lead">
         <br>
-        {{ event.description }}
+        {{ event.description|striptags }}
       </p>
       <!--================ Map =================-->
 
@@ -50,11 +59,9 @@
 
     </div>
     <!--================ Thumbnail =================-->
-    {% if event.event_image.image %}
     <div class="col-lg-4 offset-lg-1 p-0 mb-4 overflow-hidden">
-      <img class="rounded-3" src={{ event.event_image.get_image_300x300.url }} alt="..." />
+      <img class="rounded-3" src="{% if event.event_image.get_image_300x300.url %} {{event.event_image.get_image_300x300.url}} {% else %} {% static 'img/users/avatars-default.jpg' %} {% endif %}" alt="..." />
     </div>
-    {% endif %}
     <!--================ Comment List =================-->
     <hr class="hr">
     <div id="comments">
@@ -64,8 +71,9 @@
           <p>{{ comment.message }}</p>
           <div class="d-flex justify-content-between">
             <div class="d-flex flex-row align-items-center">
-              <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" alt="avatar"
-                width="40" height="40">
+              {% if comment.author.avatar.image %}
+                <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" width="40" height="40">
+              {% endif %}
               <p class="small mb-0 ms-2">{{ comment.author.username }}</p>
             </div>
           </div>
@@ -81,13 +89,23 @@
       {% include 'include/form.html' %}
       <div class="row justify-content-center text-center">
         <div class="col-md-12">
-          <input type="submit" class="btn btn-success btn-send" value="{% translate 'Post' %}">
+          <input type="submit" class="btn btn-outline-success btn-send" value="{% translate 'Post' %}">
         </div>
       </div>
     </form>
     {% else %}
       <hr class="hr">
       <p class="text-center text-muted"><i>{% translate "You can post comments only if you are authenticated" %}</i></p>
+    {% endif %}
+    <!--================ Delete Event Button =================-->
+    {% if user.id == event.organizer.id %}
+      <form method="post">
+        {% csrf_token %}
+        <div class="col-md-12 text-center mt-5 mb-1">
+          <hr class="hr">
+          <input type="submit" name="delete_event" class="btn btn-outline-danger" value="{% translate 'Delete Event' %}">
+        </div>
+      </form>
     {% endif %}
   </div>
 </div>

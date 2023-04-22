@@ -2,6 +2,14 @@
 {% load static %} {% load i18n %}
 {% block content %}
 
+{% if messages %}
+<ul class="messages text-center">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><i>{{ message }}<i></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <div class="events mx-auto col-9">
   <div class="events__search mx-auto col-12 row">
     <form action="" method="get">

@@ -65,6 +65,8 @@
             <h2 class="mb-1 text-center">{% translate 'Actions' %}</h2>
             <ul class="list-group d-flex flex-column align-items-center">
               <li class="list-group-item text-center w-25"><a class="btn btn-success"
+                href="{% url 'events:user_events' %}">{% translate 'My events' %}</a></li>
+              <li class="list-group-item text-center w-25"><a class="btn btn-success"
                   href="{% url 'events:create_event' %}">{% translate 'Create event' %}</a></li>
               <li class="list-group-item text-center w-25"><a class="btn btn-success"
                   href="{% url 'users:password_change' %}">{% translate 'Change password' %}</a></li>

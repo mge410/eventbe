@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'django_cleanup.apps.CleanupConfig',
     'django_filters',
+    'tinymce',
     # Eventbe
     'about.apps.AboutConfig',
     'core.apps.CoreConfig',

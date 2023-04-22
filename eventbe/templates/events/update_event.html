@@ -1,0 +1,94 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+<title>{% translate "Create Event" %}</title>
+{% endblock %}
+
+{% block content %}
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=ru_RU"
+  type="text/javascript"></script>
+<script src="{% static 'js/ya_map_create_event.js' %}" type="text/javascript"></script>
+
+<div class="container text-center">
+  {% if event.organizer.id == user.id %}
+    <h2 class="mb-5">{% translate "Update event" %}</h2>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <p>{{ message }}</p>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <script type="text/javascript"></script>
+    <form class="basic-form" method="post" enctype="multipart/form-data">
+      {% include 'include/form.html' with form=thumbnail_form %}
+    </form>
+    <form method="post">
+      {% csrf_token %}
+      <ul class="list-group list-group-flush col-8 mx-auto">
+        {% with "location_x location_y" as hide_inputs %}
+        {% for field in form %}
+        {% if field.name not in hide_inputs.split %}
+
+        <div class="form-group">
+
+          <label class="font-weight-bold" for="{{ field.id_for_label }}">
+            {{ field.label }}</label>
+
+          {{ field }}
+
+          {% if field.name == 'is_offline' %}
+
+          <div id="map" style="width: 40rem; height: 30rem"></div>
+          {% translate '' %}
+          <table class="table" id="location_table">
+            <tbody>
+              <tr>
+                <td><label class="font-weight-bold" for="{{  form.location_x.id_for_label }}">
+                    {% translate 'Longitude' %}</label>
+                </td>
+                <td>
+                  <label class="font-weight-bold" for="{{  form.location_y.id_for_label }}">
+                    {% translate 'Latitude' %}</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ form.location_x }}
+                </td>
+                <td>
+                  {{ form.location_y }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          {% endif %}
+
+          {% if field.errors %}
+          <div class="text-danger">
+            {% translate 'Form filling errors' %}
+            {{ field.errors|safe }}
+          </div>
+          {% endif %}
+          <div>{{ field.help_text }}</div>
+
+        </div>
+        <br>
+
+        {% endif %}
+        {% endfor %}
+        {% endwith %}
+      </ul>
+
+      <input type="submit" value={% translate "Update" %} class="btn btn-secondary mt-2 mb-2">
+    </form>
+    {% endif %}
+  {% else %}
+    <h1 class="display-6 mt-5">You are not the organizer, so you cannot change the event</h2>
+  {% endif %}
+</div>
+{% endblock %}

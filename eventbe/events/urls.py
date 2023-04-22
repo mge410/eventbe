@@ -21,4 +21,14 @@ urlpatterns = [
         events.views.EventDetail.as_view(),
         name='detail',
     ),
+    path(
+        'my_events/',
+        events.views.EventsUserList.as_view(),
+        name='user_events',
+    ),
+    path(
+        'update/<int:id>',
+        events.views.EventUpdateView.as_view(),
+        name='update',
+    ),
 ]

@@ -15,6 +15,11 @@ class EventManager(django.db.models.Manager):
             ),
         )
 
+    def user_created_events(self, id: int) -> django.db.models.QuerySet:
+        return self.prefetch_events().filter(
+            organizer_id=id,
+        )
+
     def prefetch_events(self) -> django.db.models.QuerySet:
         return (
             self.get_queryset()
