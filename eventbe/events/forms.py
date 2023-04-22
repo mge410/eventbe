@@ -53,3 +53,16 @@ class AddMembers(django.forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+
+class AddTags(django.forms.ModelForm):
+    class Meta:
+        model = events.models.Tag
+        fields = [
+            events.models.Tag.title.field.name,
+        ]
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

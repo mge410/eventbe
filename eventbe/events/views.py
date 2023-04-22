@@ -1,11 +1,15 @@
 import django.contrib.messages as messages
+import django.core.mail
 import django.core.paginator
 import django.core.serializers
 import django.db.models
 import django.http
+from django.http import HttpResponseRedirect
 import django.shortcuts
 import django.urls
+from django.urls import reverse_lazy
 import django.views.generic
+from django.views.generic import FormView
 
 import events.filters
 import events.forms
@@ -112,6 +116,17 @@ class EventCreateView(django.views.generic.CreateView):
             'The event is successfully created',
         )
         return django.urls.reverse('events:events_list')
+
+
+class TagCreateView(FormView):
+    form_class = events.forms.AddTags
+    template_name = 'events/add_tags.html'
+    success_url = reverse_lazy('events:create_tags')
+
+    def form_valid(self, form: events.forms.AddTags) -> HttpResponseRedirect:
+        form.save()
+        messages.success(self.request, 'Thanks for the application')
+        return super().form_valid(form)
 
 
 def get_ajax_all_events(request):

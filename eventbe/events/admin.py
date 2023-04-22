@@ -72,10 +72,6 @@ class TagAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
         events.models.Tag.title.field.name,
         events.models.Tag.is_active.field.name,
-        events.models.Tag.slug.field.name,
     )
-    list_editable = (
-        events.models.Tag.is_active.field.name,
-        events.models.Tag.slug.field.name,
-    )
+    list_editable = (events.models.Tag.is_active.field.name,)
     list_display_links = (events.models.Tag.title.field.name,)
