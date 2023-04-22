@@ -43,7 +43,10 @@
           </a>
         </h5>
         <p class="card-text">{{event.description|truncatewords:20}}</p>
-        <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green">{% translate 'Follow' %} </a>
+        <div class="row">
+            <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green w-50 d-block">{% translate 'Learn more' %} </a>
+            <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block" type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate 'Don\'t take part' %}{% endif %}</button></form>
+        </div>
       </div>
     </div>
     {% endfor %}

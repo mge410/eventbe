@@ -33,6 +33,12 @@ msgstr "Создать событие"
 msgid "Create an event"
 msgstr "Создать событие"
 
+msgid "Learn more"
+msgstr "Узнать больше"
+
+msgid "Members"
+msgstr "Участники"
+
 msgid "Create"
 msgstr "Создать"
 
