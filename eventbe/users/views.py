@@ -87,6 +87,7 @@ class UsersProfile(django.views.View):
             request.FILES,
             instance=user,
         )
+
         avatarform = users.forms.UserAvatarChangeForm(
             request.POST,
             request.FILES,

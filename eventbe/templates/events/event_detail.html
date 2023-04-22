@@ -7,8 +7,15 @@
 
   <div class="row align-items-center rounded-3 border shadow-lg">
     <div class="col-12 p-3 p-lg-5 pt-lg-3">
-      <div class="row">
+      <div class="d-flex align-items-center">
+        <div class="row">
         <div class="d-inline col-6">
+          <!--================ To Update =================-->
+          {% if event.organizer.id == user.id %}
+            <a href="{% url 'events:update' id=event.id %}">
+              <img src="{% static 'img/gear.png' %}" width="50" height="50" style="opacity: 0.5;">
+            </a>
+          {% endif %}
           <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
           <div class="row">
           {% if user.is_authenticated %}
@@ -24,33 +31,23 @@
           {% endfor %}
           </ul>
           {% endif %}
-          <p>{{ event.tags.all|join:'   ' }}</p>
+          <p>{{ event.tags.all|join:' | ' }}</p>
           <h3 class="display-9">{{ event.date }}</h3>
         </div>
         <!--================ Thumbnail =================-->
         {% if event.event_image.image %}
         <div class="d-inline col-sm-12 col-md-4 overflow-hidden">
-          <img class="rounded-3 col-12" src={{ event.event_image.get_image_300x300.url }} alt="..." />
+          <img class="rounded-3" src="{% if event.event_image.get_image_300x300.url %} {{event.event_image.get_image_300x300.url}} {% else %} {% static 'img/users/avatars-default.jpg' %} {% endif %}" alt="..." />
         </div>
         {% endif %}
       </div>
       <hr class="hr">
-      
       <!--================ Description =================-->
       <p class="lead">
         <br>
         {{ event.description|safe }}
       </p>
 
-    </div>
-    <hr class="hr">
-    <!--================ Photo Gallery =================-->
-    <div id="imagegallery" class="">
-      {% for photo in event.gallery_images.image %}
-      <img src={{ photo.get_image_300x300.url }} alt="..." class="rounded mx-auto d-block mb-5" />
-      {% empty %}
-      <p class="text-center mb-3">{% translate "There are no additional photos to this event" %}</p>
-      {% endfor %}
     </div>
     <hr class="hr">
     <!--================ Map =================-->
@@ -89,9 +86,6 @@
         </tbody>
       </table>
     </div>
-    {% endif %}
-
-
     <div class="container m-3">
     <h2 class="text-center">{% translate "Members" %}</h2>
       <table class="table m-3">
@@ -119,9 +113,6 @@
         </tbody>
       </table>
     </div>
-
-
-
     <!--================ Comment List =================-->
     <hr class="hr">
     <div id="comments">
@@ -131,8 +122,9 @@
           <p>{{ comment.message }}</p>
           <div class="d-flex justify-content-between">
             <div class="d-flex flex-row align-items-center">
-              <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" alt="avatar"
-                width="40" height="40">
+              {% if comment.author.avatar.image %}
+                <img src="{{ comment.author.avatar.get_image_300x300.url }}" class="rounded-circle" width="40" height="40">
+              {% endif %}
               <p class="small mb-0 ms-2">{{ comment.author.username }}</p>
             </div>
           </div>
@@ -148,13 +140,23 @@
       {% include 'include/form.html' %}
       <div class="row justify-content-center text-center">
         <div class="col-md-12">
-          <input type="submit" class="btn btn-success btn-send" value="{% translate 'Post' %}">
+          <input type="submit" class="btn btn-outline-success btn-send" value="{% translate 'Post' %}">
         </div>
       </div>
     </form>
     {% else %}
     <hr class="hr">
     <p class="text-center text-muted"><i>{% translate "You cannot post comments unless you are authenticated" %}</i></p>
+    {% endif %}
+    <!--================ Delete Event Button =================-->
+    {% if user.id == event.organizer.id %}
+      <form method="post">
+        {% csrf_token %}
+        <div class="col-md-12 text-center mt-5 mb-1">
+          <hr class="hr">
+          <input type="submit" name="delete_event" class="btn btn-outline-danger" value="{% translate 'Delete Event' %}">
+        </div>
+      </form>
     {% endif %}
   </div>
 </div>
