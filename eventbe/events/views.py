@@ -40,15 +40,22 @@ class EventsListView(django.views.generic.View):
         )
 
     def post(self, request: django.http.HttpRequest, *args, **kwargs):
+        user = users.models.User.objects.get(id=request.user.id)
         event = events.models.Event.objects.get(id=request.POST['event_id'])
         if request.user in event.members.all():
             event.members.remove(request.user)
+            event.organizer.coins -= 10
+            user.coins -= 10
             messages.success(
                 self.request, 'You are no longer a participant of the event!'
             )
         else:
             event.members.add(request.user)
+            event.organizer.coins += 10
+            user.coins += 10
             messages.success(self.request, 'You are an event participant!')
+        user.save()
+        event.organizer.save()
         return django.shortcuts.redirect(self.get_success_url(**{'id': 1}))
 
 

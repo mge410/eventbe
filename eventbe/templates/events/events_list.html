@@ -25,8 +25,9 @@
         <button class="btn events__search-btn d-block col-6" type="submit">
           {% translate "Search" %}
         </button>
-        <a class="btn events__create-btn d-block col-3" type="submit" href="{% url 'events:create_event' %}">
-          {% translate 'Create event' %}
+       {% if user.is_authenticated %}
+        <a class="btn events__create-btn d-block col-3" type="submit" href="{% url 'events:create_event' %}">{% translate 'Create event' %}
+       {% endif %}
         </a>
       </div>
     </form>
@@ -45,9 +46,11 @@
 
         <div class="d-flex align-items-start flex-column" style="height:80%;">
           <div class="card-text event-card__description col-12 mb-auto">{{event.description|safe|truncatewords_html:20}}</div>
-          <div class="row">
+          <div class="row w-100">
             <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green w-50 d-block">{% translate 'Learn more' %} </a>
+            {% if event.organizer.id != user.id %}
             <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block" type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate 'Don\'t take part' %}{% endif %}</button></form>
+            {% endif %}
           </div>
         </div>
         </div>
