@@ -4,65 +4,87 @@
 
 {% block content %}
 <div class="container my-5">
-  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-        <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
-        <div class="row">
+
+  <div class="row align-items-center rounded-3 border shadow-lg">
+    <div class="col-12 p-3 p-lg-5 pt-lg-3">
+      <div class="row">
+        <div class="d-inline col-6">
+          <h1 class="display-4 fw-bold lh-1 mb-3">{{ event.title }}</h1>
+          <div class="row">
             <form action="{% url 'events:add_members' %}" method="post" class="w-50 ">{% csrf_token %}<input name="event_id" type="hidden" value="{{ event.id }}"><button class="btn btn-green d-block" type="submit">{% if request.user not in event.members.all %}{% translate 'Take part' %}{% else %}{% translate 'Don\'t take part' %}{% endif %}</button></form>
+          </div>
+          <!--================ Tags =================-->
+          {% if messages %}
+          <ul class="messages">
+          {% for message in messages %}
+            <li class="text-success font-weight-bold text-center display-6 m-4">{{ message }}</li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+          <p>{{ event.tags.all|join:'   ' }}</p>
+          <h3 class="display-9">{{ event.date }}</h3>
         </div>
-      <!--================ Tags =================-->
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li class="text-success font-weight-bold text-center display-6 m-4">{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      <p>{{ event.tags.all|join:'   ' }}</p>
-      <h3 class="display-9">{{ event.date }}</h3>
+        <!--================ Thumbnail =================-->
+        {% if event.event_image.image %}
+        <div class="d-inline col-sm-12 col-md-4 overflow-hidden">
+          <img class="rounded-3 col-12" src={{ event.event_image.get_image_300x300.url }} alt="..." />
+        </div>
+        {% endif %}
+      </div>
+      <hr class="hr">
+      
       <!--================ Description =================-->
       <p class="lead">
         <br>
-        {{ event.description }}
+        {{ event.description|safe }}
       </p>
-      <!--================ Map =================-->
 
-      {% if field.is_offline %}
+    </div>
+    <hr class="hr">
+    <!--================ Photo Gallery =================-->
+    <div id="imagegallery" class="">
+      {% for photo in event.gallery_images.image %}
+      <img src={{ photo.get_image_300x300.url }} alt="..." class="rounded mx-auto d-block mb-5" />
+      {% empty %}
+      <p class="text-center mb-3">{% translate "There are no additional photos to this event" %}</p>
+      {% endfor %}
+    </div>
+    <hr class="hr">
+    <!--================ Map =================-->
+    {% if event.is_offline %}
+    {% get_current_language as LANGUAGE_CODE %}
 
-      <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=ru_RU"
-        type="text/javascript"></script>
-      <script src="{% static 'js/ya_map_create_event.js' %}" type="text/javascript"></script>
+    {% if LANGUAGE_CODE|lower|slice:2 == "ru" %}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=ru_RU"
+      type="text/javascript"></script>
+    {% else %}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=bb74b0bc-212f-441f-84ea-455e27c089a2&lang=en_RU"
+      type="text/javascript"></script>
+    {% endif %}
 
-      <div id="map" style="width: 40rem; height: 30rem;"></div>
-      {% translate '' %}
-      <table class="table" id="location_table">
+    <script src="{% static 'js/ya_map_detail_event.js' %}" type="text/javascript"></script>
+    <div class="col-10  mx-auto">
+      <div id="map" class="map-detail col-12"></div>
+      <table class="table text-center" id="location_table">
         <tbody>
           <tr>
-            <td><label class="font-weight-bold" for="{{  form.location_x.id_for_label }}">
+            <td><label class="font-weight-bold" for="id_location_x">
                 {% translate 'Longitude' %}</label></td>
             <td>
-              <label class="font-weight-bold" for="{{  form.location_y.id_for_label }}">
+              <label class="font-weight-bold" for="id_location_y">
                 {% translate 'Latitude' %}</label>
             </td>
           </tr>
           <tr>
-            <td>
-              {{ form.location_x }}
+            <td id="id_location_x">
+              {{ event.location_x }}
             </td>
-            <td>
-              {{ form.location_y }}
+            <td id="id_location_y">
+              {{ event.location_y }}
             </td>
           </tr>
         </tbody>
       </table>
-
-      {% endif %}
-
-    </div>
-    <!--================ Thumbnail =================-->
-    {% if event.event_image.image %}
-    <div class="col-lg-4 offset-lg-1 p-0 mb-4 overflow-hidden">
-      <img class="rounded-3" src={{ event.event_image.get_image_300x300.url }} alt="..." />
     </div>
     {% endif %}
 
@@ -96,6 +118,7 @@
     </div>
 
 
+
     <!--================ Comment List =================-->
     <hr class="hr">
     <div id="comments">
@@ -127,8 +150,8 @@
       </div>
     </form>
     {% else %}
-      <hr class="hr">
-      <p class="text-center text-muted"><i>{% translate "You can post comments only if you are authenticated" %}</i></p>
+    <hr class="hr">
+    <p class="text-center text-muted"><i>{% translate "You cannot post comments unless you are authenticated" %}</i></p>
     {% endif %}
   </div>
 </div>

@@ -5,12 +5,14 @@ function init() {
     "map",
     {
       center: [55.76, 37.64],
-      zoom: 10,
+      zoom: 2,
     },
     {
       searchControlProvider: "yandex#search",
     }
   );
+  myMap.container.fitToViewport();
+
   var myPlacemark = null;
   var input_x = document.getElementById("id_location_x");
   var input_y = document.getElementById("id_location_y");

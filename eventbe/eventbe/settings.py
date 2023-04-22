@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from typing import List
 
+from django.utils.translation import gettext_lazy as _
 import environ
 
 env = environ.Env(
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     # Third-party
     'debug_toolbar',
     'sorl.thumbnail',
+    'tinymce',
     'django_cleanup.apps.CleanupConfig',
     'django_filters',
     # Eventbe
@@ -107,8 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGES = (
-    ('en', ('English',)),
-    ('ru', ('Russian',)),
+    ('en', _('English')),
+    ('ru', _('Russian')),
 )
 
 LANGUAGE_CODE = 'en'
