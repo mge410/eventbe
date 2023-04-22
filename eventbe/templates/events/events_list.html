@@ -50,9 +50,12 @@
             {{ event.title }}
           </a>
         </h5>
-        <p class="card-text">{{event.description|truncatewords:20}}</p>
-        <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green">{% translate 'Follow' %} </a>
-      </div>
+        <div class="d-flex align-items-start flex-column" style="height:80%;">
+          <div class="card-text event-card__description col-12 mb-auto">{{event.description|safe|truncatewords_html:20}}</div>
+          <a href="{% url 'events:detail' id=event.id %}" class="btn btn-green">{% translate 'Follow' %} </a>
+        </div>
+        </div>
+       
     </div>
     {% endfor %}
   </div>

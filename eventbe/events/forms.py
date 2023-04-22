@@ -3,6 +3,10 @@ import django.forms
 import events.models
 
 
+class CustomDateInput(django.forms.DateInput):
+    input_type = 'date'
+
+
 class EventForm(django.forms.ModelForm):
     class Meta:
         model = events.models.Event
@@ -16,6 +20,9 @@ class EventForm(django.forms.ModelForm):
             events.models.Event.is_offline.field.name,
             events.models.Event.tags.field.name,
         ]
+        widgets = {
+            events.models.Event.date.field.name: CustomDateInput,
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

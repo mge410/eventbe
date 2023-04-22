@@ -51,6 +51,7 @@ class EventManager(django.db.models.Manager):
             self.get_queryset()
             .filter(is_published=True, is_offline=True, is_active=True)
             .values(
+                events.models.Event.id.field.name,
                 events.models.Event.title.field.name,
                 events.models.Event.description.field.name,
                 events.models.Event.date.field.name,

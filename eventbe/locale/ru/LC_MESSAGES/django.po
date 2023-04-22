@@ -24,6 +24,9 @@ msgstr "О нас"
 msgid "Our company was started in 2023 as a startup to help people get together and spend time with other people who have similar interests."
 msgstr "Наша компания была основана 2023 как стартап для того, чтобы помочь людям организовывать встречи и проводить время с людьми с похожими интересами."
 
+msgid "We help people gather in the right atmosphere"
+msgstr "Мы помогаем людям собраться в нужной атмосфере"
+
 msgid "Create Event"
 msgstr "Создать событие"
 
