@@ -65,7 +65,7 @@
   {% if page_obj.has_next or page_obj.has_previous %}
   <nav class="col-12 events__pagination-nav d-flex justify-content-center" aria-label="Page navigation example">
     <ul class="pagination">
-      {% if page_obj.has_other_pages %}
+      {% if page_obj.has_previous %}
       <li class="page-item">
         <a class="page-link"
           href="{% url 'events:events_list' %}?page={{page_obj.has_other_pages}}">{% translate "Previous" %}</a>
@@ -74,14 +74,18 @@
       <li class="page-item">
         <a class="page-link" href="{% url 'events:events_list' %}?page=1">1</a>
       </li>
+      {% if page_obj.has_previous %}
       <li class="page-item">
         <a class="page-link" href="{% url 'events:events_list' %}?page={{page_obj.number}}"
           disabled>{{page_obj.number}}</a>
       </li>
+      {% endif %}
+      {% if page_obj.has_next %}
       <li class="page-item">
         <a class="page-link"
           href="{% url 'events:events_list' %}?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}}</a>
       </li>
+      {% endif %}
       {% if page_obj.has_next %}
       <li class="page-item">
         <a class="page-link"
