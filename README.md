@@ -7,7 +7,7 @@
 
 * API Яндекс Карт <br> https://yandex.ru/dev/maps/
 * Django 3.2.17 <br> https://www.djangoproject.com/download/
-* Python 3.10, 3.11 <br> https://www.python.org/downloads/
+* Python 3.10 / 3.11 <br> https://www.python.org/downloads/
 
 
 **Запуск проекта**

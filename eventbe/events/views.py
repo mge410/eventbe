@@ -1,15 +1,20 @@
 import django.contrib.messages as messages
+import django.core.mail
 import django.core.paginator
 import django.core.serializers
 import django.db.models
 import django.http
+from django.http import HttpResponseRedirect
 import django.shortcuts
 import django.urls
+from django.urls import reverse_lazy
 import django.views.generic
+from django.views.generic import FormView
 
 import events.filters
 import events.forms
 import events.models
+import users.models
 
 
 class EventsListView(django.views.generic.View):
@@ -27,6 +32,35 @@ class EventsListView(django.views.generic.View):
         )
         context['page_obj'] = paginator.get_page(request.GET.get('page', 1))
         return django.shortcuts.render(request, self.template_name, context)
+
+    def get_success_url(self, **kwargs):
+        return django.urls.reverse_lazy(
+            'events:detail',
+            kwargs={'id': kwargs['id']},
+        )
+
+    def post(self, request: django.http.HttpRequest, *args, **kwargs):
+        user = users.models.User.objects.get(id=request.user.id)
+        event = events.models.Event.objects.get(id=request.POST['event_id'])
+        if request.user in event.members.all():
+            event.members.remove(request.user)
+            event.organizer.coins -= 10
+            user.events_organized -= 1
+            user.events_visited -= 1
+            user.coins -= 10
+            messages.success(
+                self.request, 'You are no longer a participant of the event!'
+            )
+        else:
+            event.members.add(request.user)
+            event.organizer.coins += 10
+            user.events_organized += 1
+            user.events_visited += 1
+            user.coins += 10
+            messages.success(self.request, 'You are an event participant!')
+        user.save()
+        event.organizer.save()
+        return django.shortcuts.redirect(self.get_success_url(**{'id': 1}))
 
 
 class EventDetail(
@@ -46,6 +80,7 @@ class EventDetail(
         ] = events.models.EventComment.objects.comments_by_event_id(
             self.kwargs['id']
         )
+        context['users'] = users.models.User.objects.all()
         return context
 
     def get_success_url(self, **kwargs):
@@ -159,6 +194,17 @@ class EventsUserList(django.views.generic.View):
         )
         context['page_obj'] = paginator.get_page(request.GET.get('page', 1))
         return django.shortcuts.render(request, self.template_name, context)
+
+
+class TagCreateView(FormView):
+    form_class = events.forms.AddTags
+    template_name = 'events/add_tags.html'
+    success_url = reverse_lazy('events:create_tags')
+
+    def form_valid(self, form: events.forms.AddTags) -> HttpResponseRedirect:
+        form.save()
+        messages.success(self.request, 'Thanks for the application')
+        return super().form_valid(form)
 
 
 def get_ajax_all_events(request):

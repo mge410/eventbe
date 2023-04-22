@@ -17,6 +17,11 @@ urlpatterns = [
         name='ajax_offline_events',
     ),
     path(
+        'add_members/',
+        login_required(events.views.EventsListView.as_view()),
+        name='add_members',
+    ),
+    path(
         '<int:id>/',
         events.views.EventDetail.as_view(),
         name='detail',
@@ -30,5 +35,10 @@ urlpatterns = [
         'update/<int:id>',
         events.views.EventUpdateView.as_view(),
         name='update',
+    ),
+    path(
+        'create_tags/',
+        events.views.TagCreateView.as_view(),
+        name='create_tags',
     ),
 ]
